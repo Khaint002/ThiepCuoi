@@ -349,8 +349,8 @@ legend{font-size:13px;font-weight:500;padding:0;margin-bottom:6px}
 
 </main>
 
-<!-- Nhạc nền: đặt file nhạc tại music/song.mp3 (trình duyệt chỉ cho phát sau khi khách chạm vào trang) -->
-<audio id="bgm" src="music/song.mp3" loop preload="none"></audio>
+<!-- Nhạc nền: file nhạc tại music/song.m4a, tự phát khi khách chạm vào trang lần đầu -->
+<audio id="bgm" src="music/song.m4a" loop preload="auto"></audio>
 <button class="music" id="musicBtn" type="button" aria-label="Bật/tắt nhạc nền">
   <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
 </button>
@@ -508,10 +508,17 @@ document.getElementById('rsvpForm').addEventListener('submit', async (e) => {
 (function music() {
   const audio = document.getElementById('bgm');
   const btn = document.getElementById('musicBtn');
+  const play = () => audio.play().then(() => btn.classList.add('playing')).catch(() => {});
   btn.addEventListener('click', () => {
-    if (audio.paused) { audio.play().then(() => btn.classList.add('playing')).catch(() => {}); }
+    if (audio.paused) { play(); }
     else { audio.pause(); btn.classList.remove('playing'); }
   });
+  // Lần chạm đầu tiên ở bất kỳ đâu trên trang (trừ nút nhạc) sẽ bật nhạc
+  const firstTouch = (e) => {
+    document.removeEventListener('click', firstTouch);
+    if (!btn.contains(e.target) && audio.paused) play();
+  };
+  document.addEventListener('click', firstTouch);
 })();
 </script>
 </body>
