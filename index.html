@@ -19,21 +19,22 @@
    CẤU HÌNH NHANH: đổi màu & font tại đây
    ========================================================= */
 :root{
-  --accent:#8E1F2B;          /* màu chủ đạo: #8E1F2B đỏ trầu · #3F5A45 xanh lá · #2E3F5C navy · #7A5A2E nâu vàng */
-  --accent-dark:#6B1520;
+  --accent:#2F5D8A;          /* màu chủ đạo: #2F5D8A xanh dương · #8E1F2B đỏ trầu · #3F5A45 xanh lá · #2E3F5C navy · #7A5A2E nâu vàng */
+  --accent-dark:#234869;     /* đậm hơn accent: #234869 xanh dương · #6B1520 đỏ trầu */
   --name-font:'Great Vibes'; /* 'Great Vibes' · 'Imperial Script' · 'Dancing Script' · 'Charm' */
-  --bg:#F7F2EA;
-  --bg-alt:#EFE7DC;
-  --ink:#2B2420;
-  --ink-2:#4A3D35;
-  --muted:#6E5F52;
-  --line:#CDBFB1;
-  --ph:#E9DFD2;              /* màu ô giữ chỗ ảnh */
+  --bg:#F2F6FB;
+  --bg-alt:#E3ECF6;
+  --ink:#1C2A3A;
+  --ink-2:#34485E;
+  --muted:#56687C;
+  --line:#C3D1E0;
+  --ph:#DCE6F1;              /* màu ô giữ chỗ ảnh */
 }
 
 *{box-sizing:border-box}
+[hidden]{display:none!important}
 html{scroll-behavior:smooth}
-body{margin:0;background:#EDE5DA;color:var(--ink);font-family:'Be Vietnam Pro',system-ui,sans-serif;font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased}
+body{margin:0;background:#E4ECF5;color:var(--ink);font-family:'Be Vietnam Pro',system-ui,sans-serif;font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased}
 a{color:var(--accent)}a:hover{color:var(--accent-dark)}
 img{display:block;max-width:100%}
 h1,h2,p{margin:0}
@@ -45,7 +46,7 @@ h1,h2,p{margin:0}
 .section{padding:64px 28px;display:flex;flex-direction:column;gap:24px}
 .title{font-size:44px;line-height:1.2;color:var(--accent);text-align:center}
 .grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
-.ph{background:var(--ph);border:1px dashed #A8978A;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:12px;text-align:center;overflow:hidden}
+.ph{background:var(--ph);border:1px dashed #93A6BC;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:12px;text-align:center;overflow:hidden}
 .ph img{width:100%;height:100%;object-fit:cover}
 
 /* ---------- Cánh hoa rơi ---------- */
@@ -60,7 +61,7 @@ h1,h2,p{margin:0}
 .cover-slide{position:relative;width:33.3333%;height:100%;overflow:hidden;flex-shrink:0}
 .cover-slide .ph{position:absolute;inset:0;border:0;align-items:flex-start;padding-top:22vh;letter-spacing:.08em;text-transform:uppercase;animation:kb 14s ease-in-out infinite alternate}
 @keyframes kb{from{transform:scale(1)}to{transform:scale(1.1)}}
-.cover-shade{position:absolute;left:0;right:0;bottom:0;height:55%;background:linear-gradient(to top,rgba(43,36,32,.8),rgba(43,36,32,0))}
+.cover-shade{position:absolute;left:0;right:0;bottom:0;height:55%;background:linear-gradient(to top,rgba(20,36,56,.8),rgba(20,36,56,0))}
 .cover-text{position:absolute;left:0;right:0;bottom:56px;padding:0 20px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px;color:#fff}
 .cover-text .kicker{font-size:12px;letter-spacing:.35em;text-transform:uppercase}
 .cover-text h1{font-size:58px;line-height:1.15;text-shadow:0 2px 12px rgba(0,0,0,.35)}
@@ -90,21 +91,39 @@ h1,h2,p{margin:0}
 .role{font-size:12px;color:var(--muted)}
 .arch{height:220px;border-radius:110px 110px 0 0}
 .quote{font-style:italic;font-size:20px;line-height:1.5;color:var(--ink-2)}
+.guest{display:flex;flex-direction:column;gap:10px;margin-top:-12px}
+.guest-name{font-size:40px;line-height:1.2;color:var(--accent)}
+.guest-invite{font-style:italic;font-size:18px;line-height:1.5;color:var(--ink-2);white-space:pre-line}
 
 /* ---------- Sự kiện ---------- */
-.events{background:var(--accent);color:var(--bg)}
-.events .title{color:var(--bg)}
-.card{background:var(--bg);color:var(--ink);padding:24px;display:flex;flex-direction:column;gap:10px}
-.card .when{font-size:26px;line-height:1.2}
-.card .lunar{font-size:13px;color:var(--muted)}
-.card .map{height:180px;border:0;width:100%}
-.link-btn{align-self:flex-start;display:inline-flex;align-items:center;gap:6px;min-height:44px;font-size:14px;font-weight:500;text-decoration:none}
+.events{background:linear-gradient(180deg,var(--accent),var(--accent-dark));color:var(--bg)}
+.events .title{color:#fff}
+.events .lead{margin-top:-14px;text-align:center;font-size:14px;color:#D6E2F0}
+.card{position:relative;background:var(--bg);color:var(--ink);padding:32px 22px 26px;border-radius:18px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:12px;box-shadow:0 14px 34px rgba(8,22,42,.28)}
+.card::before{content:'';position:absolute;inset:7px;border:1px solid var(--line);border-radius:13px;pointer-events:none}
+.card .eyebrow{letter-spacing:.3em}
+.card .event-name{font-size:40px;line-height:1.1;color:var(--accent);margin-top:-4px}
+.card .time{font-family:'Cormorant Garamond',serif;font-size:20px;letter-spacing:.18em;color:var(--ink-2)}
+.when{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:14px;width:100%}
+.when-side{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:7px 0;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)}
+.when-day{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:64px;line-height:.9;color:var(--accent)}
+.card .year{font-family:'Cormorant Garamond',serif;font-size:20px;letter-spacing:.3em;color:var(--ink-2);margin-top:-4px}
+.card .lunar{font-size:13px;font-style:italic;color:var(--muted)}
+.orn{display:flex;align-items:center;gap:10px;color:var(--accent);width:60%}
+.orn::before,.orn::after{content:'';flex:1;height:1px;background:var(--line)}
+.card .place{font-size:16px;font-weight:600}
+.card .addr{font-size:14px;color:var(--ink-2);margin-top:-6px}
+.card .map{height:180px;border:0;width:100%;border-radius:12px}
+.card-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:4px}
+.pill{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 18px;border-radius:999px;border:1px solid var(--accent);color:var(--accent);font-size:14px;font-weight:500;text-decoration:none;transition:background .2s,color .2s}
+.pill:hover,.pill.solid{background:var(--accent);color:#fff}
+.pill.solid:hover{background:var(--accent-dark);color:#fff}
 
 /* ---------- Đếm ngược ---------- */
 .cd{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
 .cd div{border:1px solid var(--line);padding:14px 4px;text-align:center}
 .cd b{display:block;font-family:'Cormorant Garamond',serif;font-weight:500;font-size:32px;line-height:1;color:var(--accent)}
-.cd small{display:block;margin-top:6px;font-size:11px;color:#5A4A40}
+.cd small{display:block;margin-top:6px;font-size:11px;color:var(--ink-2)}
 
 /* ---------- Album ---------- */
 .album{padding:0 0 64px}
@@ -119,7 +138,7 @@ h1,h2,p{margin:0}
 /* ---------- RSVP ---------- */
 .rsvp{background:var(--bg-alt)}
 .field{display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:500}
-.field input,.field select,.field textarea{font:inherit;font-size:15px;font-weight:400;border:1px solid #A8978A;background:#fff;color:var(--ink);padding:0 14px;height:48px;border-radius:0}
+.field input,.field select,.field textarea{font:inherit;font-size:15px;font-weight:400;border:1px solid #93A6BC;background:#fff;color:var(--ink);padding:0 14px;height:48px;border-radius:0}
 .field textarea{height:auto;padding:12px 14px;resize:none}
 fieldset{border:0;margin:0;padding:0;display:flex;flex-direction:column;gap:4px}
 legend{font-size:13px;font-weight:500;padding:0;margin-bottom:6px}
@@ -136,12 +155,14 @@ legend{font-size:13px;font-weight:500;padding:0;margin-bottom:6px}
 /* ---------- Cảm ơn ---------- */
 .thanks{background:var(--ink);color:var(--bg);padding:72px 28px;align-items:center;text-align:center;gap:14px}
 .thanks .big{font-size:48px;line-height:1.2}
-.thanks .sub{font-size:14px;color:#D9CEC2}
+.thanks .sub{font-size:14px;color:#C9D6E5}
 .thanks .names{margin-top:12px;font-size:34px;line-height:1.3}
 
 /* ---------- Nút nhạc nền ---------- */
 .music{position:fixed;right:16px;bottom:16px;z-index:60;width:48px;height:48px;border-radius:24px;border:0;background:var(--accent);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(0,0,0,.2)}
 .music.playing svg{animation:spin 4s linear infinite}
+.fireworks{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:70;background:rgba(10,18,36,.6);opacity:0;transition:opacity .5s}
+.fireworks.on{opacity:1}
 @keyframes spin{to{transform:rotate(360deg)}}
 @media (min-width:431px){.music{right:calc(50% - 215px + 16px)}}
 
@@ -163,9 +184,9 @@ legend{font-size:13px;font-weight:500;padding:0;margin-bottom:6px}
   <section class="cover">
     <div class="cover-track" id="coverTrack">
       <!-- Thay mỗi .ph bằng <img src="images/cover-1.jpg" alt=""> -->
-      <div class="cover-slide"><div class="ph" style="background:#D9C7B8">[Ảnh bìa 1]</div></div>
-      <div class="cover-slide"><div class="ph" style="background:#CBB8A6">[Ảnh bìa 2]</div></div>
-      <div class="cover-slide"><div class="ph" style="background:#E2D3C4">[Ảnh bìa 3]</div></div>
+      <div class="cover-slide"><div class="ph" style="background:#C9D8E8">[Ảnh bìa 1]</div></div>
+      <div class="cover-slide"><div class="ph" style="background:#B8CBE0">[Ảnh bìa 2]</div></div>
+      <div class="cover-slide"><div class="ph" style="background:#D6E2EF">[Ảnh bìa 3]</div></div>
     </div>
     <div class="cover-shade"></div>
     <div class="cover-text">
@@ -184,7 +205,12 @@ legend{font-size:13px;font-weight:500;padding:0;margin-bottom:6px}
 
   <!-- 2. LỜI MỜI -->
   <section class="section center" style="align-items:center;gap:28px">
-    <p class="serif rv up" style="font-size:22px;font-style:italic;color:#5A4A40">Trân trọng kính mời</p>
+    <p class="serif rv up" style="font-size:22px;font-style:italic;color:var(--ink-2)">Trân trọng kính mời</p>
+    <!-- Lời mời riêng: hiện khi mở link có ?g=<mã khách> (tạo ở admin.html) -->
+    <div class="guest" id="guestBox" hidden>
+      <p class="script guest-name rv zoom" id="guestName"></p>
+      <p class="serif guest-invite rv up" id="guestInvite"></p>
+    </div>
     <div class="grid2" style="width:100%;gap:16px">
       <div class="family rv left">
         <p class="eyebrow">Nhà trai</p>
@@ -227,37 +253,74 @@ legend{font-size:13px;font-weight:500;padding:0;margin-bottom:6px}
   <!-- 4. THỜI GIAN & ĐỊA ĐIỂM -->
   <section class="section events" style="gap:28px">
     <h2 class="script title rv zoom">Thời gian &amp; địa điểm</h2>
+    <p class="lead rv up">Sự hiện diện của bạn là niềm vinh hạnh của gia đình chúng mình</p>
 
+    <!-- Mỗi thẻ: thay [Thứ] (vd: Thứ Bảy), [DD], [MM], [YYYY], [HH:MM] -->
     <div class="card rv up">
-      <p class="eyebrow">Lễ vu quy · Nhà gái</p>
-      <p class="serif when">[HH:MM] · [Thứ], [DD/MM/YYYY]</p>
-      <p class="lunar">Tức ngày [DD/MM] năm [Âm lịch]</p>
-      <p style="font-size:14px">[Địa chỉ tổ chức]</p>
-      <a class="link-btn" href="https://maps.google.com/?q=[ĐỊA CHỈ NHÀ GÁI]" target="_blank" rel="noopener">
-        <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Xem bản đồ
-      </a>
+      <p class="eyebrow">Nhà gái</p>
+      <p class="script event-name">Lễ Vu Quy</p>
+      <p class="time">VÀO LÚC [HH:MM]</p>
+      <div class="when">
+        <span class="when-side">[Thứ]</span>
+        <span class="when-day">[DD]</span>
+        <span class="when-side">Tháng [MM]</span>
+      </div>
+      <p class="year">[YYYY]</p>
+      <p class="lunar">Tức ngày [DD] tháng [MM] năm [Âm lịch]</p>
+      <div class="orn" aria-hidden="true">✦</div>
+      <p class="place">Tư gia nhà gái</p>
+      <p class="addr">[Địa chỉ tổ chức]</p>
+      <div class="card-actions">
+        <a class="pill" href="https://maps.google.com/?q=[ĐỊA CHỈ NHÀ GÁI]" target="_blank" rel="noopener">
+          <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Chỉ đường
+        </a>
+      </div>
     </div>
 
     <div class="card rv up">
-      <p class="eyebrow">Lễ thành hôn · Nhà trai</p>
-      <p class="serif when">[HH:MM] · [Thứ], [DD/MM/YYYY]</p>
-      <p class="lunar">Tức ngày [DD/MM] năm [Âm lịch]</p>
-      <p style="font-size:14px">[Địa chỉ tổ chức]</p>
-      <a class="link-btn" href="https://maps.google.com/?q=[ĐỊA CHỈ NHÀ TRAI]" target="_blank" rel="noopener">
-        <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Xem bản đồ
-      </a>
+      <p class="eyebrow">Nhà trai</p>
+      <p class="script event-name">Lễ Thành Hôn</p>
+      <p class="time">VÀO LÚC [HH:MM]</p>
+      <div class="when">
+        <span class="when-side">[Thứ]</span>
+        <span class="when-day">[DD]</span>
+        <span class="when-side">Tháng [MM]</span>
+      </div>
+      <p class="year">[YYYY]</p>
+      <p class="lunar">Tức ngày [DD] tháng [MM] năm [Âm lịch]</p>
+      <div class="orn" aria-hidden="true">✦</div>
+      <p class="place">Tư gia nhà trai</p>
+      <p class="addr">[Địa chỉ tổ chức]</p>
+      <div class="card-actions">
+        <a class="pill" href="https://maps.google.com/?q=[ĐỊA CHỈ NHÀ TRAI]" target="_blank" rel="noopener">
+          <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Chỉ đường
+        </a>
+      </div>
     </div>
 
     <div class="card rv up">
-      <p class="eyebrow">Tiệc cưới</p>
-      <p class="serif when">[HH:MM] · [Thứ], [DD/MM/YYYY]</p>
-      <p style="font-size:14px">[Tên nhà hàng / sảnh]</p>
-      <p style="font-size:14px">[Địa chỉ nhà hàng]</p>
-      <!-- Google Maps > Chia sẻ > Nhúng bản đồ > copy link src vào đây -->
-      <div class="ph" style="height:180px">[Nhúng bản đồ Google Maps]</div>
-      <a class="link-btn" href="#" id="addCalendar">
-        <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="16" rx="1"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Thêm vào lịch
-      </a>
+      <p class="eyebrow">Trân trọng kính mời</p>
+      <p class="script event-name">Tiệc Cưới</p>
+      <p class="time">VÀO LÚC [HH:MM]</p>
+      <div class="when">
+        <span class="when-side">[Thứ]</span>
+        <span class="when-day">[DD]</span>
+        <span class="when-side">Tháng [MM]</span>
+      </div>
+      <p class="year">[YYYY]</p>
+      <div class="orn" aria-hidden="true">✦</div>
+      <p class="place">[Tên nhà hàng / sảnh]</p>
+      <p class="addr">[Địa chỉ nhà hàng]</p>
+      <!-- Google Maps > Chia sẻ > Nhúng bản đồ > thay ô này bằng <iframe class="map" src="..." loading="lazy"></iframe> -->
+      <div class="ph map">[Nhúng bản đồ Google Maps]</div>
+      <div class="card-actions">
+        <a class="pill" href="https://maps.google.com/?q=[ĐỊA CHỈ NHÀ HÀNG]" target="_blank" rel="noopener">
+          <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Chỉ đường
+        </a>
+        <a class="pill solid" href="#" id="addCalendar">
+          <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="16" rx="1"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Thêm vào lịch
+        </a>
+      </div>
     </div>
   </section>
 
@@ -278,12 +341,12 @@ legend{font-size:13px;font-weight:500;padding:0;margin-bottom:6px}
     <div class="album-view rv up" id="albumView">
       <div class="album-track" id="albumTrack">
         <!-- Thay mỗi .ph bằng <img src="images/album-1.jpg" alt=""> -->
-        <div class="album-item ph active" style="background:#E2D3C4">[Ảnh 1]</div>
-        <div class="album-item ph" style="background:#D9C7B8">[Ảnh 2]</div>
-        <div class="album-item ph" style="background:#E9DFD2">[Ảnh 3]</div>
-        <div class="album-item ph" style="background:#CBB8A6">[Ảnh 4]</div>
-        <div class="album-item ph" style="background:#E2D3C4">[Ảnh 5]</div>
-        <div class="album-item ph" style="background:#D9C7B8">[Ảnh 6]</div>
+        <div class="album-item ph active" style="background:#D6E2EF">[Ảnh 1]</div>
+        <div class="album-item ph" style="background:#C9D8E8">[Ảnh 2]</div>
+        <div class="album-item ph" style="background:#DCE6F1">[Ảnh 3]</div>
+        <div class="album-item ph" style="background:#B8CBE0">[Ảnh 4]</div>
+        <div class="album-item ph" style="background:#D6E2EF">[Ảnh 5]</div>
+        <div class="album-item ph" style="background:#C9D8E8">[Ảnh 6]</div>
       </div>
     </div>
     <div class="album-nav">
@@ -329,13 +392,13 @@ legend{font-size:13px;font-weight:500;padding:0;margin-bottom:6px}
         <p class="eyebrow">Chú rể</p>
         <div class="ph qr">[Mã QR]</div>
         <p>[Ngân hàng]</p>
-        <p style="color:#5A4A40">[Chủ tài khoản]</p>
+        <p style="color:var(--ink-2)">[Chủ tài khoản]</p>
       </div>
       <div class="gift rv right d1">
         <p class="eyebrow">Cô dâu</p>
         <div class="ph qr">[Mã QR]</div>
         <p>[Ngân hàng]</p>
-        <p style="color:#5A4A40">[Chủ tài khoản]</p>
+        <p style="color:var(--ink-2)">[Chủ tài khoản]</p>
       </div>
     </div>
   </section>
@@ -365,15 +428,37 @@ const CONFIG = {
   eventLocation: '[Địa chỉ nhà hàng]',
   eventDurationHours: 3,
   petals: true,
-  petalColors: ['#F4C2C9', '#EBA9B3', '#F8D7DC'], // trắng ngà: ['#FFFFFF','#F6EEE3','#F2E6D8'] · đỏ hồng: ['#D9536A','#E87F8F','#C43A52']
+  petalColors: ['#F4C2C9', '#EBA9B3', '#F8D7DC'], // xanh nhạt: ['#FFFFFF','#DCE8F5','#C3D6EC'] · trắng ngà: ['#FFFFFF','#F6EEE3','#F2E6D8'] · đỏ hồng: ['#D9536A','#E87F8F','#C43A52']
   petalCount: 22,
   coverInterval: 5000,  // ms
   albumInterval: 4000,  // ms
-  // Dán URL Google Apps Script / Formspree / API riêng để nhận RSVP. Để trống thì chỉ hiện lời cảm ơn.
-  rsvpEndpoint: ''
+  // Dán URL ứng dụng web Google Apps Script (xem apps-script/Code.gs). Để trống thì chỉ hiện lời cảm ơn.
+  rsvpEndpoint: 'https://script.google.com/macros/s/AKfycbw1-Lq8u0Q_XXkRsuF-zipBUCSWWH4hsT6VmXIU-zKXzT4bH8LtBoKLNnICNmc6ZXYb/exec'
 };
 
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const guestId = new URLSearchParams(location.search).get('g') || '';
+
+/* ---------- Lời mời riêng theo link ?g=<mã khách> ---------- */
+(function personalInvite() {
+  if (!guestId || !CONFIG.rsvpEndpoint) return;
+  fetch(CONFIG.rsvpEndpoint + '?g=' + encodeURIComponent(guestId))
+    .then((res) => res.json())
+    .then(({ ok, guest }) => {
+      if (!ok) return;
+      document.getElementById('guestName').textContent = guest.name;
+      const invite = document.getElementById('guestInvite');
+      invite.textContent = guest.invite;
+      invite.hidden = !guest.invite;
+      document.getElementById('guestBox').hidden = false;
+      // Điền sẵn form xác nhận
+      const f = document.getElementById('rsvpForm').elements;
+      const name = f.namedItem('name'), side = f.namedItem('side');
+      if (!name.value) name.value = guest.name;
+      if ([...side.options].some((o) => o.value === guest.side)) side.value = guest.side;
+    })
+    .catch(() => {});
+})();
 
 /* ---------- Cánh hoa rơi ---------- */
 (function petals() {
@@ -481,23 +566,95 @@ const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').match
   a.href = url; a.target = '_blank'; a.rel = 'noopener';
 })();
 
+/* ---------- Pháo hoa sau khi gửi lời chúc ---------- */
+function fireworks() {
+  if (reduceMotion) return;
+  const cv = document.createElement('canvas');
+  cv.className = 'fireworks';
+  document.body.appendChild(cv);
+  const ctx = cv.getContext('2d');
+  const W = innerWidth, H = innerHeight, dpr = Math.min(devicePixelRatio || 1, 2);
+  cv.width = W * dpr; cv.height = H * dpr; ctx.scale(dpr, dpr);
+  requestAnimationFrame(() => cv.classList.add('on'));
+  const colors = ['#FF3B6B', '#FFD24A', '#FF8A3D', '#4FD1FF', '#B46BFF', '#7CFF8A', '#FF6FD8'];
+  const pick = () => colors[Math.random() * colors.length | 0];
+  const rockets = [], sparks = [], flashes = [];
+  const burst = (x, y) => {
+    const c1 = pick(), c2 = pick(), n = 120;
+    for (let i = 0; i < n; i++) {
+      const a = Math.PI * 2 * i / n + Math.random() * .1, v = 2 + Math.random() * 5;
+      sparks.push({ x, y, px: x, py: y, vx: Math.cos(a) * v, vy: Math.sin(a) * v, life: 1,
+        decay: .008 + Math.random() * .008, size: 1.6 + Math.random() * 1.8, color: i % 3 ? c1 : c2 });
+    }
+    flashes.push({ x, y, life: 1, color: c1 });
+  };
+  const SHOTS = 10, GAP = 260; // số quả pháo, khoảng cách bắn (ms)
+  for (let i = 0; i < SHOTS; i++) {
+    setTimeout(() => rockets.push({ x: W * (.15 + Math.random() * .7), y: H, px: 0, py: 0,
+      ty: H * (.12 + Math.random() * .3), v: 9 + Math.random() * 3, drift: (Math.random() - .5) * 1.5 }), i * GAP);
+  }
+  const start = performance.now();
+  (function frame(t) {
+    // Xoá dần khung cũ để tạo vệt sáng đuôi
+    ctx.globalCompositeOperation = 'destination-out';
+    ctx.globalAlpha = 1; ctx.fillStyle = 'rgba(0,0,0,.28)';
+    ctx.fillRect(0, 0, W, H);
+    ctx.globalCompositeOperation = 'lighter';
+    ctx.lineCap = 'round';
+    for (let i = rockets.length - 1; i >= 0; i--) {
+      const r = rockets[i];
+      r.px = r.x; r.py = r.y; r.y -= r.v; r.x += r.drift;
+      ctx.strokeStyle = '#FFE9A8'; ctx.lineWidth = 2.5;
+      ctx.beginPath(); ctx.moveTo(r.px, r.py + 12); ctx.lineTo(r.x, r.y); ctx.stroke();
+      if (r.y <= r.ty) { burst(r.x, r.y); rockets.splice(i, 1); }
+    }
+    for (let i = flashes.length - 1; i >= 0; i--) {
+      const f = flashes[i];
+      const g = ctx.createRadialGradient(f.x, f.y, 0, f.x, f.y, 70);
+      g.addColorStop(0, 'rgba(255,255,255,' + f.life * .9 + ')');
+      g.addColorStop(.4, f.color);
+      g.addColorStop(1, 'rgba(0,0,0,0)');
+      ctx.globalAlpha = f.life * .5; ctx.fillStyle = g;
+      ctx.fillRect(f.x - 70, f.y - 70, 140, 140);
+      if ((f.life -= .12) <= 0) flashes.splice(i, 1);
+    }
+    for (let i = sparks.length - 1; i >= 0; i--) {
+      const p = sparks[i];
+      p.px = p.x; p.py = p.y;
+      p.vx *= .975; p.vy = p.vy * .975 + .045;
+      p.x += p.vx; p.y += p.vy;
+      if ((p.life -= p.decay) <= 0) { sparks.splice(i, 1); continue; }
+      // Lấp lánh khi sắp tắt
+      ctx.globalAlpha = p.life < .4 && Math.random() < .5 ? p.life * .3 : p.life;
+      ctx.strokeStyle = p.color; ctx.lineWidth = p.size;
+      ctx.beginPath(); ctx.moveTo(p.px, p.py); ctx.lineTo(p.x, p.y); ctx.stroke();
+    }
+    if (t - start < SHOTS * GAP + 200 || rockets.length || sparks.length) requestAnimationFrame(frame);
+    else { cv.classList.remove('on'); setTimeout(() => cv.remove(), 600); }
+  })(start);
+}
+
 /* ---------- RSVP ---------- */
 document.getElementById('rsvpForm').addEventListener('submit', async (e) => {
   e.preventDefault();
   const form = e.target;
   const btn = form.querySelector('button[type="submit"]');
   const data = Object.fromEntries(new FormData(form).entries());
+  data.g = guestId;
   btn.disabled = true; btn.textContent = 'Đang gửi…';
   try {
     if (CONFIG.rsvpEndpoint) {
-      await fetch(CONFIG.rsvpEndpoint, {
+      const res = await fetch(CONFIG.rsvpEndpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'text/plain;charset=utf-8' },
         body: JSON.stringify(data)
       });
+      const result = await res.json();
+      if (!result.ok) throw new Error(result.error);
     }
     form.querySelectorAll('.field,fieldset,.btn').forEach((el) => (el.hidden = true));
     document.getElementById('rsvpDone').hidden = false;
+    fireworks();
   } catch (err) {
     btn.disabled = false; btn.textContent = 'Gửi xác nhận';
     alert('Gửi chưa thành công, bạn thử lại giúp mình nhé.');

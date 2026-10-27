@@ -1,0 +1,400 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Quản trị thiệp cưới</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Be+Vietnam+Pro:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --accent:#2F5D8A;
+  --accent-dark:#234869;
+  --bg:#F2F6FB;
+  --card:#FFFFFF;
+  --ink:#1C2A3A;
+  --muted:#56687C;
+  --line:#CBD8E6;
+  --ok:#2F6B45;
+  --no:#9A3A2E;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Be Vietnam Pro',system-ui,sans-serif;font-size:15px;line-height:1.5}
+button,input,select,textarea{font:inherit;color:inherit}
+.wrap{max-width:760px;margin:0 auto;padding:24px 16px 64px;display:flex;flex-direction:column;gap:20px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.top h1{margin:0;font-family:'Great Vibes',cursive;font-weight:400;font-size:38px;line-height:1.1;color:var(--accent)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;display:flex;flex-direction:column;gap:14px}
+.card h2{margin:0;font-size:16px;font-weight:600}
+.field{display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:500}
+.field input,.field select,.field textarea{font-size:15px;font-weight:400;border:1px solid #A9BACD;border-radius:8px;background:#fff;padding:10px 12px;min-height:44px}
+.field textarea{resize:vertical}
+.hint{font-size:12px;font-weight:400;color:var(--muted)}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+.row>*{flex:1 1 180px}
+.btn{min-height:44px;padding:0 18px;border:0;border-radius:8px;background:var(--accent);color:#fff;font-weight:600;cursor:pointer}
+.btn:hover{background:var(--accent-dark)}
+.btn:disabled{opacity:.6;cursor:default}
+.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--line)}
+.btn.ghost:hover{background:#EAF0F7}
+.btn.sm{min-height:36px;padding:0 12px;font-size:13px;font-weight:500}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 12px}
+.stat b{display:block;font-size:26px;line-height:1.1;color:var(--accent)}
+.stat span{font-size:12px;color:var(--muted)}
+@media (max-width:520px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.tabs{display:flex;gap:6px;border-bottom:1px solid var(--line)}
+.tab{border:0;background:none;padding:10px 14px;min-height:44px;cursor:pointer;color:var(--muted);font-weight:500;border-bottom:2px solid transparent;margin-bottom:-1px}
+.tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+.list{display:flex;flex-direction:column;gap:10px}
+.item{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:8px}
+.item .head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
+.item .name{font-weight:600}
+.meta{font-size:12px;color:var(--muted)}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{font-size:12px;padding:2px 10px;border-radius:999px;background:#E6EDF5;color:var(--muted)}
+.chip.ok{background:#E3F0E7;color:var(--ok)}
+.chip.no{background:#F6E2DE;color:var(--no)}
+.msg{white-space:pre-line;font-size:14px;border-left:3px solid var(--line);padding-left:10px}
+.actions{display:flex;gap:6px;flex-wrap:wrap}
+.empty{text-align:center;color:var(--muted);padding:24px 0}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 18px;border-radius:8px;font-size:14px;z-index:10;max-width:calc(100% - 32px)}
+.login{max-width:380px;width:100%;margin:12vh auto 0}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <!-- Đăng nhập -->
+  <form class="card login" id="loginForm">
+    <h1 style="margin:0;font-family:'Great Vibes',cursive;font-weight:400;font-size:38px;color:var(--accent);text-align:center">Quản trị thiệp cưới</h1>
+    <label class="field">Mật khẩu
+      <input type="password" id="pw" autocomplete="current-password" required>
+      <span class="hint">Mật khẩu ADMIN_PASSWORD đã đặt trong Apps Script</span>
+    </label>
+    <button class="btn" type="submit">Đăng nhập</button>
+  </form>
+
+  <!-- Trang chính -->
+  <div id="app" hidden style="display:flex;flex-direction:column;gap:20px">
+    <div class="top">
+      <h1>Quản trị thiệp cưới</h1>
+      <div class="actions">
+        <button class="btn ghost sm" type="button" id="reload">Làm mới</button>
+        <button class="btn ghost sm" type="button" id="logout">Đăng xuất</button>
+      </div>
+    </div>
+
+    <div class="stats" id="stats"></div>
+
+    <div class="tabs" role="tablist">
+      <button class="tab active" type="button" data-tab="guests">Khách mời</button>
+      <button class="tab" type="button" data-tab="wishes">Lời chúc</button>
+    </div>
+
+    <!-- Tab khách mời -->
+    <section id="tab-guests" style="display:flex;flex-direction:column;gap:16px">
+      <form class="card" id="guestForm">
+        <h2 id="guestFormTitle">Thêm khách mời</h2>
+        <label class="field">Tên hiển thị trên thiệp
+          <textarea id="gName" rows="3" required placeholder="Anh Nam &amp; người thương&#10;Gia đình chú Hùng"></textarea>
+          <span class="hint" id="gNameHint">Mỗi dòng một khách: thêm nhiều khách cùng lúc với chung lời mời bên dưới</span>
+        </label>
+        <div class="row">
+          <label class="field">Khách của
+            <select id="gSide"><option>Nhà trai</option><option>Nhà gái</option></select>
+          </label>
+        </div>
+        <label class="field">Lời mời riêng <span class="hint">(không bắt buộc)</span>
+          <textarea id="gInvite" rows="2" placeholder="Tới dự bữa tiệc thân mật mừng hạnh phúc của chúng mình"></textarea>
+        </label>
+        <div class="actions">
+          <button class="btn" type="submit" id="gSubmit">Thêm khách</button>
+          <button class="btn ghost" type="button" id="gCancel" hidden>Huỷ</button>
+        </div>
+      </form>
+
+      <div class="row">
+        <label class="field">Tìm khách
+          <input type="search" id="search" placeholder="Nhập tên…">
+        </label>
+        <label class="field">Lọc
+          <select id="filter">
+            <option value="">Tất cả</option>
+            <option value="Nhà trai">Nhà trai</option>
+            <option value="Nhà gái">Nhà gái</option>
+            <option value="unopened">Chưa mở thiệp</option>
+            <option value="noreply">Chưa phản hồi</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="list" id="guestList"></div>
+    </section>
+
+    <!-- Tab lời chúc -->
+    <section id="tab-wishes" hidden>
+      <div class="list" id="wishList"></div>
+    </section>
+  </div>
+
+</div>
+
+<p class="toast" id="toast" hidden></p>
+
+<script>
+/* =========================================================
+   CẤU HÌNH
+   ========================================================= */
+// Cùng URL với rsvpEndpoint trong index.html
+const ENDPOINT = 'https://script.google.com/macros/s/AKfycbw1-Lq8u0Q_XXkRsuF-zipBUCSWWH4hsT6VmXIU-zKXzT4bH8LtBoKLNnICNmc6ZXYb/exec';
+// Địa chỉ thiệp đã đăng (vd: https://khaint002.github.io/ThiepCuoi/). Để trống thì lấy index.html cùng thư mục với trang này.
+const SITE_URL = '';
+
+let password = '';
+let state = { guests: [], wishes: [] };
+let editingId = null;
+const $ = (id) => document.getElementById(id);
+try { password = sessionStorage.getItem('adminPw') || ''; } catch (e) {}
+
+/* ---------- Gọi Apps Script ---------- */
+async function call(action, extra = {}) {
+  const res = await fetch(ENDPOINT, {
+    method: 'POST',
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    body: JSON.stringify({ action, password, ...extra })
+  });
+  const result = await res.json();
+  if (!result.ok) throw new Error(result.error || 'Có lỗi xảy ra');
+  state = { guests: result.guests, wishes: result.wishes };
+  render();
+  return result;
+}
+
+function toast(text) {
+  const t = $('toast');
+  t.textContent = text;
+  t.hidden = false;
+  clearTimeout(toast.timer);
+  toast.timer = setTimeout(() => (t.hidden = true), 2500);
+}
+
+const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const fmtTime = (iso) => iso ? new Date(iso).toLocaleString('vi-VN', { dateStyle: 'short', timeStyle: 'short' }) : '';
+const linkFor = (id) => {
+  const base = SITE_URL || new URL('index.html', location.href).href;
+  return base + (base.includes('?') ? '&' : '?') + 'g=' + id;
+};
+
+/* ---------- Đăng nhập ---------- */
+async function login(pw) {
+  password = pw;
+  try {
+    await call('list');
+    try { sessionStorage.setItem('adminPw', pw); } catch (e) {}
+    $('loginForm').hidden = true;
+    $('app').hidden = false;
+  } catch (err) {
+    password = '';
+    try { sessionStorage.removeItem('adminPw'); } catch (e) {}
+    $('loginForm').hidden = false;
+    toast(err.message);
+  }
+}
+
+$('loginForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = e.target.querySelector('button');
+  btn.disabled = true; btn.textContent = 'Đang đăng nhập…';
+  await login($('pw').value);
+  btn.disabled = false; btn.textContent = 'Đăng nhập';
+});
+
+$('logout').addEventListener('click', () => {
+  try { sessionStorage.removeItem('adminPw'); } catch (e) {}
+  location.reload();
+});
+
+$('reload').addEventListener('click', async (e) => {
+  e.target.disabled = true;
+  try { await call('list'); toast('Đã cập nhật'); } catch (err) { toast(err.message); }
+  e.target.disabled = false;
+});
+
+/* ---------- Tabs ---------- */
+document.querySelectorAll('.tab').forEach((tab) => tab.addEventListener('click', () => {
+  document.querySelectorAll('.tab').forEach((t) => t.classList.toggle('active', t === tab));
+  $('tab-guests').hidden = tab.dataset.tab !== 'guests';
+  $('tab-wishes').hidden = tab.dataset.tab !== 'wishes';
+}));
+
+/* ---------- Hiển thị ---------- */
+// Phản hồi mới nhất của từng khách (theo mã khách)
+function latestReplies() {
+  const map = {};
+  state.wishes.forEach((w) => { if (w.g) map[w.g] = w; });
+  return map;
+}
+
+function render() {
+  const replies = latestReplies();
+  const replied = Object.values(replies);
+  const attending = state.wishes.filter((w) => w.attend === 'Có');
+  // Khách có mã: lấy phản hồi mới nhất; khách gửi từ link chung: tính từng lượt
+  const comingRows = [...replied.filter((w) => w.attend === 'Có'), ...attending.filter((w) => !w.g)];
+  const people = comingRows.reduce((n, w) => n + (parseInt(w.guests, 10) || 1), 0);
+  $('stats').innerHTML = [
+    [state.guests.length, 'Khách mời'],
+    [state.guests.filter((g) => g.views > 0).length, 'Đã mở thiệp'],
+    [replied.length + state.wishes.filter((w) => !w.g).length, 'Đã phản hồi'],
+    [people, 'Người sẽ đến']
+  ].map(([n, label]) => `<div class="stat"><b>${n}</b><span>${label}</span></div>`).join('');
+  renderGuests(replies);
+  renderWishes();
+}
+
+function replyChip(w) {
+  if (!w) return '<span class="chip">Chưa phản hồi</span>';
+  return w.attend === 'Có'
+    ? `<span class="chip ok">Sẽ đến · ${esc(w.guests)} người</span>`
+    : '<span class="chip no">Không đến được</span>';
+}
+
+function renderGuests(replies = latestReplies()) {
+  const q = $('search').value.trim().toLowerCase();
+  const f = $('filter').value;
+  const list = state.guests.slice().reverse().filter((g) => {
+    if (q && !String(g.name).toLowerCase().includes(q)) return false;
+    if (f === 'unopened') return !g.views;
+    if (f === 'noreply') return !replies[g.id];
+    return !f || g.side === f;
+  });
+  $('guestList').innerHTML = list.length ? list.map((g) => `
+    <div class="item">
+      <div class="head">
+        <span class="name">${esc(g.name)}</span>
+        <span class="meta">${esc(g.side)}</span>
+      </div>
+      ${g.invite ? `<p class="msg" style="margin:0">${esc(g.invite)}</p>` : ''}
+      <div class="chips">
+        <span class="chip ${g.views ? 'ok' : ''}">${g.views ? `Đã mở ${g.views} lần · ${fmtTime(g.lastOpen)}` : 'Chưa mở thiệp'}</span>
+        ${replyChip(replies[g.id])}
+      </div>
+      ${replies[g.id] && replies[g.id].message ? `<p class="msg" style="margin:0">“${esc(replies[g.id].message)}”</p>` : ''}
+      <div class="actions">
+        <button class="btn sm" type="button" data-act="copy" data-id="${g.id}">Sao chép link</button>
+        ${navigator.share ? `<button class="btn ghost sm" type="button" data-act="share" data-id="${g.id}">Chia sẻ</button>` : ''}
+        <button class="btn ghost sm" type="button" data-act="edit" data-id="${g.id}">Sửa</button>
+        <button class="btn ghost sm" type="button" data-act="delete" data-id="${g.id}">Xoá</button>
+      </div>
+    </div>`).join('') : `<p class="empty">${state.guests.length ? 'Không có khách phù hợp' : 'Chưa có khách mời nào'}</p>`;
+}
+
+function renderWishes() {
+  const guestName = Object.fromEntries(state.guests.map((g) => [g.id, g.name]));
+  const list = state.wishes.slice().reverse();
+  $('wishList').innerHTML = list.length ? list.map((w) => `
+    <div class="item">
+      <div class="head">
+        <span class="name">${esc(w.name)}</span>
+        <span class="meta">${fmtTime(w.time)}</span>
+      </div>
+      <div class="chips">
+        <span class="chip">${esc(w.side)}</span>
+        ${replyChip(w)}
+        ${w.g ? `<span class="chip">Link riêng: ${esc(guestName[w.g] || 'khách đã xoá')}</span>` : '<span class="chip">Link chung</span>'}
+      </div>
+      ${w.message ? `<p class="msg" style="margin:0">${esc(w.message)}</p>` : ''}
+      <div class="actions">
+        <button class="btn ghost sm" type="button" data-act="deleteWish" data-row="${w.row}" data-time="${esc(w.time)}">Xoá</button>
+      </div>
+    </div>`).join('') : '<p class="empty">Chưa có lời chúc nào</p>';
+}
+
+$('search').addEventListener('input', () => renderGuests());
+$('filter').addEventListener('change', () => renderGuests());
+
+/* ---------- Thêm / sửa khách ---------- */
+function resetForm() {
+  editingId = null;
+  $('guestForm').reset();
+  $('guestFormTitle').textContent = 'Thêm khách mời';
+  $('gSubmit').textContent = 'Thêm khách';
+  $('gName').rows = 3;
+  $('gNameHint').hidden = false;
+  $('gCancel').hidden = true;
+}
+
+$('gCancel').addEventListener('click', resetForm);
+
+$('guestForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = $('gSubmit');
+  const side = $('gSide').value, invite = $('gInvite').value.trim();
+  btn.disabled = true;
+  try {
+    if (editingId) {
+      await call('updateGuest', { id: editingId, name: $('gName').value.trim().split('\n')[0], side, invite });
+      toast('Đã lưu thay đổi');
+    } else {
+      const names = $('gName').value.split('\n').map((s) => s.trim()).filter(Boolean);
+      await call('addGuests', { guests: names.map((name) => ({ name, side, invite })) });
+      toast(`Đã thêm ${names.length} khách`);
+    }
+    resetForm();
+  } catch (err) {
+    toast(err.message);
+  }
+  btn.disabled = false;
+});
+
+/* ---------- Nút trên từng dòng ---------- */
+async function copyText(text) {
+  try { await navigator.clipboard.writeText(text); toast('Đã sao chép link'); }
+  catch (e) { window.prompt('Sao chép link này:', text); }
+}
+
+document.addEventListener('click', async (e) => {
+  const btn = e.target.closest('[data-act]');
+  if (!btn) return;
+  const g = state.guests.find((x) => x.id === btn.dataset.id);
+  switch (btn.dataset.act) {
+    case 'copy':
+      copyText(linkFor(g.id));
+      break;
+    case 'share':
+      navigator.share({ title: 'Thiệp cưới', text: `Trân trọng kính mời ${g.name} tới dự ngày vui của chúng mình`, url: linkFor(g.id) }).catch(() => {});
+      break;
+    case 'edit':
+      editingId = g.id;
+      $('gName').value = g.name;
+      $('gName').rows = 1;
+      $('gSide').value = g.side;
+      $('gInvite').value = g.invite;
+      $('guestFormTitle').textContent = 'Sửa khách mời';
+      $('gSubmit').textContent = 'Lưu thay đổi';
+      $('gNameHint').hidden = true;
+      $('gCancel').hidden = false;
+      $('guestForm').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      break;
+    case 'delete':
+      if (!confirm(`Xoá khách "${g.name}"? Link riêng của khách này sẽ không còn hiện lời mời.`)) return;
+      btn.disabled = true;
+      try { await call('deleteGuest', { id: g.id }); toast('Đã xoá khách'); } catch (err) { toast(err.message); btn.disabled = false; }
+      break;
+    case 'deleteWish':
+      if (!confirm('Xoá lời chúc này khỏi Google Sheet?')) return;
+      btn.disabled = true;
+      try { await call('deleteWish', { row: Number(btn.dataset.row), time: btn.dataset.time }); toast('Đã xoá lời chúc'); } catch (err) { toast(err.message); btn.disabled = false; }
+      break;
+  }
+});
+
+if (password) login(password);
+</script>
+</body>
+</html>
