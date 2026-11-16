@@ -12,15 +12,15 @@
 <meta property="og:url" content="https://damcuoi-nine.vercel.app/">
 <meta property="og:title" content="💌 Thiệp mời cưới Trọng Tiếp &amp; Mai Chuyên">
 <meta property="og:description" content="Trân trọng kính mời bạn tới chung vui cùng gia đình chúng mình · Lễ Vu Quy 03.12 · Lễ Thành Hôn 04.12.2026">
-<meta property="og:image" content="https://damcuoi-nine.vercel.app/images/og-share.jpg">
-<meta property="og:image:secure_url" content="https://damcuoi-nine.vercel.app/images/og-share.jpg">
+<meta property="og:image" content="https://damcuoi-nine.vercel.app/images/og-cover.jpg">
+<meta property="og:image:secure_url" content="https://damcuoi-nine.vercel.app/images/og-cover.jpg">
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Trọng Tiếp &amp; Mai Chuyên – 04.12.2026">
+<meta property="og:image:alt" content="Thiệp mời cưới Trọng Tiếp &amp; Mai Chuyên – 03 &amp; 04.12.2026">
 <meta property="og:locale" content="vi_VN">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://damcuoi-nine.vercel.app/images/og-share.jpg">
+<meta name="twitter:image" content="https://damcuoi-nine.vercel.app/images/og-cover.jpg">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E💍%3C/text%3E%3C/svg%3E">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -46,6 +46,9 @@
 }
 
 *{box-sizing:border-box}
+/* Bỏ lớp tô xanh khi chạm trên điện thoại và viền focus khi bấm; vẫn giữ viền khi dùng bàn phím (Tab) */
+*{-webkit-tap-highlight-color:transparent}
+:focus:not(:focus-visible){outline:none}
 [hidden]{display:none!important}
 html{scroll-behavior:smooth}
 body{margin:0;background:#EDE5DA;color:var(--ink);font-family:'Be Vietnam Pro',system-ui,sans-serif;font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased}
@@ -198,11 +201,11 @@ body[data-v="gai"] .family.gai{order:-1}
 .album-view.fade-out{opacity:0!important;transform:translateY(14px) scale(.98)!important}
 .album.grid.anim .album-item{animation:itemIn .6s cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(var(--i) * 70ms)}
 @keyframes itemIn{from{opacity:0;transform:translateY(22px) scale(.95)}to{opacity:1;transform:none}}
-/* Đổi thẻ QR: trượt + mờ theo hướng bấm */
-.gift.gift-out{animation:giftOut .28s ease forwards}
-.gift.gift-in{animation:giftIn .5s cubic-bezier(.2,.7,.2,1) both}
-@keyframes giftOut{to{opacity:0;transform:translateX(calc(var(--dir) * -28px)) scale(.98)}}
-@keyframes giftIn{from{opacity:0;transform:translateX(calc(var(--dir) * 28px)) scale(.98)}to{opacity:1;transform:none}}
+/* Đổi thẻ QR: 2 thẻ chồng cùng 1 ô lưới nên chiều cao trang không đổi, chỉ trượt + mờ theo hướng bấm */
+.gift-panels{display:grid;width:100%}
+.gift-panels>.gift{grid-area:1/1;opacity:0;visibility:hidden;pointer-events:none;transform:translateX(calc(var(--dir,1) * 28px));transition:opacity .4s ease,transform .5s cubic-bezier(.2,.7,.2,1),visibility 0s .5s}
+.gift-panels>.gift.active{opacity:1;visibility:visible;pointer-events:auto;transform:none;transition:opacity .45s ease .08s,transform .55s cubic-bezier(.2,.7,.2,1) .08s,visibility 0s}
+.gift-panels>.gift.leaving{transform:translateX(calc(var(--dir,1) * -28px))}
 /* Xem ảnh phóng to */
 .lightbox{position:fixed;inset:0;z-index:80;background:rgba(20,12,10,.94);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:64px 16px 24px;touch-action:pan-y}
 .lb-frame{width:min(100%,520px);height:min(72vh,720px);display:flex}
@@ -314,16 +317,23 @@ body.intro-on .rise{animation-play-state:paused}
 .intro.sealing .intro-seal{animation:sealPulse .6s ease;box-shadow:0 0 0 8px rgba(246,218,148,.28),0 0 64px rgba(255,214,170,.95)}
 @keyframes sealPulse{40%{transform:scale(1.2)}100%{transform:scale(1)}}
 .intro.sealing .intro-btn{animation:none;opacity:0;transform:scale(.9);transition:opacity .3s ease,transform .3s ease}
-.intro.door{pointer-events:none;transition:none}
+/* Mỗi cánh cửa là nửa màn hình (cắt bằng overflow, nhẹ hơn clip-path), được dựng sẵn từ lúc bấm nút
+   và chỉ chạy transform + opacity để điện thoại xử lý mượt */
+.door{position:fixed;top:0;bottom:0;width:50vw;z-index:90;overflow:hidden;opacity:0;pointer-events:none;will-change:transform,opacity;backface-visibility:hidden;contain:strict}
+.door-l{left:0;transform-origin:0 50%}
+.door-r{right:0;transform-origin:100% 50%}
+.door .intro{position:absolute;inset:0 auto 0 0;width:100vw;transition:none}
+.door-r .intro{left:-50vw}
 .door .intro-card,.door .intro-btn,.door .intro-seal{animation:none!important}
-.door-l{clip-path:inset(0 50% 0 0);transform-origin:0 50%;animation:doorL 1.5s cubic-bezier(.55,0,.25,1) forwards}
-.door-r{clip-path:inset(0 0 0 50%);transform-origin:100% 50%;animation:doorR 1.5s cubic-bezier(.55,0,.25,1) forwards}
-@keyframes doorL{0%{transform:perspective(1600px) rotateY(0)}75%{opacity:1}100%{transform:perspective(1600px) rotateY(88deg);opacity:0}}
-@keyframes doorR{0%{transform:perspective(1600px) rotateY(0)}75%{opacity:1}100%{transform:perspective(1600px) rotateY(-88deg);opacity:0}}
-.intro-flash{position:fixed;inset:0;z-index:89;pointer-events:none;background:radial-gradient(circle at 50% 45%,rgba(255,244,214,.95),rgba(246,218,148,.55) 30%,rgba(142,31,43,0) 70%);animation:introFlash 1.5s ease-out forwards}
+.door .intro-card{box-shadow:none}
+.door-l.go{animation:doorL 1.4s cubic-bezier(.55,0,.25,1) forwards}
+.door-r.go{animation:doorR 1.4s cubic-bezier(.55,0,.25,1) forwards}
+@keyframes doorL{0%{transform:perspective(1600px) rotateY(0);opacity:1}75%{opacity:1}100%{transform:perspective(1600px) rotateY(88deg);opacity:0}}
+@keyframes doorR{0%{transform:perspective(1600px) rotateY(0);opacity:1}75%{opacity:1}100%{transform:perspective(1600px) rotateY(-88deg);opacity:0}}
+.intro-flash{position:fixed;inset:0;z-index:89;pointer-events:none;background:radial-gradient(circle at 50% 45%,rgba(255,244,214,.95),rgba(246,218,148,.55) 30%,rgba(142,31,43,0) 70%);will-change:opacity;animation:introFlash 1.4s ease-out forwards}
 @keyframes introFlash{0%{opacity:0}20%{opacity:1}100%{opacity:0}}
-body.revealing .page{animation:pageIn 1.6s cubic-bezier(.2,.7,.2,1) both}
-@keyframes pageIn{from{transform:scale(1.08);filter:brightness(1.2) blur(2px)}to{transform:none;filter:none}}
+body.revealing .cover{animation:pageIn 1.5s cubic-bezier(.2,.7,.2,1) both;will-change:transform}
+@keyframes pageIn{from{transform:scale(1.08)}to{transform:none}}
 @media (prefers-reduced-motion:reduce){.intro-card,.intro-btn{animation:none}.intro{transition:none}}
 
 /* ---------- Nút nhạc nền ---------- */
@@ -338,7 +348,8 @@ body.revealing .page{animation:pageIn 1.6s cubic-bezier(.2,.7,.2,1) both}
   .petals{display:none}
   .cover-slide .ph,.rise,.music.playing svg{animation:none}
   .cover-track,.album-track,.seg-thumb{transition:none}
-  .album.grid.anim .album-item,.gift.gift-in,.gift.gift-out{animation:none}
+  .album.grid.anim .album-item{animation:none}
+  .gift-panels>.gift,.gift-panels>.gift.active{transition:none}
   .rv{opacity:1;transform:none;filter:none;transition:none}
 }
 </style>
@@ -600,9 +611,10 @@ body.revealing .page{animation:pageIn 1.6s cubic-bezier(.2,.7,.2,1) both}
       <button class="gift-tab" type="button" role="tab" data-gift="trai" aria-selected="true">Chú rể</button>
       <button class="gift-tab" type="button" role="tab" data-gift="gai" aria-selected="false">Cô dâu</button>
     </div>
-    <div class="gift rv up" data-gift-panel="trai" role="tabpanel">
+    <div class="gift-panels">
+    <div class="gift active" data-gift-panel="trai" role="tabpanel">
       <p class="eyebrow">Mừng cưới chú rể</p>
-      <a href="images/qr-trai.jpg" target="_blank" rel="noopener" aria-label="Mở mã QR cỡ lớn"><img class="qr" src="images/qr-trai.jpg" alt="Mã QR chuyển khoản TPBank của chú rể" loading="lazy"></a>
+      <a href="images/qr-trai.jpg" target="_blank" rel="noopener" aria-label="Mở mã QR cỡ lớn"><img class="qr" src="images/qr-trai.jpg" alt="Mã QR chuyển khoản TPBank của chú rể" width="600" height="812"></a>
       <p class="bank">TPBank</p>
       <p class="holder">VI VAN TIEP</p>
       <p class="acct">03036526001</p>
@@ -611,9 +623,9 @@ body.revealing .page{animation:pageIn 1.6s cubic-bezier(.2,.7,.2,1) both}
         <a class="pill" href="images/qr-trai.jpg" download><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>Tải mã QR</a>
       </div>
     </div>
-    <div class="gift rv up" data-gift-panel="gai" role="tabpanel" hidden>
+    <div class="gift" data-gift-panel="gai" role="tabpanel" aria-hidden="true">
       <p class="eyebrow">Mừng cưới cô dâu</p>
-      <a href="images/qr-gai.jpg" target="_blank" rel="noopener" aria-label="Mở mã QR cỡ lớn"><img class="qr" src="images/qr-gai.jpg" alt="Mã QR chuyển khoản VietQR của cô dâu" loading="lazy"></a>
+      <a href="images/qr-gai.jpg" target="_blank" rel="noopener" aria-label="Mở mã QR cỡ lớn"><img class="qr" src="images/qr-gai.jpg" alt="Mã QR chuyển khoản VietQR của cô dâu" width="600" height="758"></a>
       <p class="bank">VietQR · Napas 247</p>
       <p class="holder">TRAN THI MAI CHUYEN</p>
       <p class="acct">0354096804</p>
@@ -621,6 +633,7 @@ body.revealing .page{animation:pageIn 1.6s cubic-bezier(.2,.7,.2,1) both}
         <button class="pill solid" type="button" data-copy="0354096804"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>Sao chép số tài khoản</button>
         <a class="pill" href="images/qr-gai.jpg" download><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>Tải mã QR</a>
       </div>
+    </div>
     </div>
     </div>
   </section>
@@ -718,30 +731,23 @@ window.addEventListener('load', refreshThumbs);
 if (document.fonts) document.fonts.ready.then(refreshThumbs);
 
 /* ---------- Hộp mừng cưới: chọn chú rể / cô dâu ---------- */
-let giftBusy = false;
 function selectGift(who, animate) {
   const panels = [...document.querySelectorAll('[data-gift-panel]')];
   const next = panels.find((p) => p.dataset.giftPanel === who);
-  const cur = panels.find((p) => !p.hidden);
-  if (giftBusy || cur === next) return;
+  const cur = panels.find((p) => p.classList.contains('active'));
+  if (cur === next) return;
   document.querySelectorAll('.gift-tab').forEach((t) => t.setAttribute('aria-selected', String(t.dataset.gift === who)));
   moveThumb(document.querySelector('.gift-tabs'));
-  if (!animate || reduceMotion || !cur) {
-    panels.forEach((p) => { p.hidden = p !== next; });
-    return;
-  }
-  giftBusy = true;
-  const dir = who === 'gai' ? 1 : -1; // cô dâu ở bên phải: trượt sang trái
-  cur.style.setProperty('--dir', dir);
-  next.style.setProperty('--dir', dir);
-  cur.classList.add('gift-out');
-  setTimeout(() => {
-    cur.hidden = true;
-    cur.classList.remove('gift-out');
-    next.classList.add('in', 'gift-in');
-    next.hidden = false;
-    setTimeout(() => { next.classList.remove('gift-in'); giftBusy = false; }, 500);
-  }, 280);
+  const dir = who === 'gai' ? 1 : -1; // cô dâu ở bên phải: thẻ trượt sang trái
+  panels.forEach((p) => {
+    p.style.setProperty('--dir', dir);
+    p.style.transition = animate ? '' : 'none'; // lần đầu đặt thẳng, không trượt
+    p.classList.toggle('active', p === next);
+    p.classList.toggle('leaving', animate && p === cur);
+    p.setAttribute('aria-hidden', String(p !== next));
+  });
+  if (!animate) { panels[0].offsetWidth; panels.forEach((p) => { p.style.transition = ''; }); }
+  else setTimeout(() => cur && cur.classList.remove('leaving'), 550);
 }
 document.querySelectorAll('.gift-tab').forEach((t) => t.addEventListener('click', () => selectGift(t.dataset.gift, true)));
 document.querySelectorAll('[data-copy]').forEach((btn) => btn.addEventListener('click', async () => {
@@ -804,7 +810,7 @@ function confetti(ox, oy, petal) {
   cv.className = 'confetti';
   document.body.appendChild(cv);
   const ctx = cv.getContext('2d');
-  const W = innerWidth, H = innerHeight, dpr = Math.min(devicePixelRatio || 1, 2);
+  const W = innerWidth, H = innerHeight, dpr = Math.min(devicePixelRatio || 1, 1.5);
   cv.width = W * dpr; cv.height = H * dpr; ctx.scale(dpr, dpr);
   const colors = petal
     ? ['#F4C2C9', '#EBA9B3', '#F8D7DC', '#FFFFFF', '#F3D48A']
@@ -825,7 +831,7 @@ function confetti(ox, oy, petal) {
   };
   const up = -Math.PI / 2;
   if (petal) {
-    shoot(ox, oy, up, 3.4, 150, 13);
+    shoot(ox, oy, up, 3.4, 80, 13);
   } else {
     shoot(ox, oy, up, 1.6, 110, 15);
     shoot(0, H, -Math.PI / 3, .6, 60, 20);
@@ -839,13 +845,15 @@ function confetti(ox, oy, petal) {
       if (p.vy > 4) p.vy = 4 + (p.vy - 4) * .9; // rơi chậm như giấy
       p.x += p.vx + Math.sin(p.flip) * .6; p.y += p.vy;
       p.rot += p.vr; p.flip += .12;
-      ctx.save();
-      ctx.translate(p.x, p.y); ctx.rotate(p.rot); ctx.scale(1, Math.cos(p.flip));
+      if (p.y > H + 40) return;
+      // Xoay + lật bằng 1 phép setTransform (nhanh hơn save/translate/rotate/scale/restore)
+      const c = Math.cos(p.rot), s = Math.sin(p.rot), f = Math.cos(p.flip);
+      ctx.setTransform(dpr * c, dpr * s, -dpr * s * f, dpr * c * f, dpr * p.x, dpr * p.y);
       ctx.fillStyle = p.color;
       if (petal) { ctx.beginPath(); ctx.ellipse(0, 0, p.w * .6, p.h * .55, 0, 0, Math.PI * 2); ctx.fill(); }
       else ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
-      ctx.restore();
     });
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.lineCap = 'round'; ctx.lineJoin = 'round';
     ribbons.forEach((r) => {
       r.vx *= .98; r.vy = r.vy * .98 + .22;
@@ -906,30 +914,34 @@ function confetti(ox, oy, petal) {
     if (reduceMotion) { finish(); box.remove(); return; }
     // 1. Con dấu 囍 sáng lên, đường sáng chạy dọc giữa màn hình
     box.classList.add('sealing');
+    // Dựng sẵn 2 cánh cửa (ẩn) ngay lúc này để khi bắt đầu mở máy không phải dựng lại cả màn hình
+    const doors = ['door-l', 'door-r'].map((cls) => {
+      const door = document.createElement('div');
+      door.className = 'door ' + cls;
+      door.setAttribute('aria-hidden', 'true');
+      const copy = box.cloneNode(true);
+      copy.removeAttribute('id');
+      copy.querySelectorAll('[id]').forEach((el) => el.removeAttribute('id'));
+      door.appendChild(copy);
+      document.body.appendChild(door);
+      return door;
+    });
     setTimeout(() => {
-      // 2. Tách màn thành 2 cánh cửa xoay mở sang hai bên
-      const doors = ['door-l', 'door-r'].map((cls) => {
-        const door = box.cloneNode(true);
-        door.removeAttribute('id');
-        door.querySelectorAll('[id]').forEach((el) => el.removeAttribute('id'));
-        door.classList.add('door', cls);
-        door.setAttribute('aria-hidden', 'true');
-        document.body.appendChild(door);
-        return door;
-      });
-      // 3. Ánh sáng vàng từ khe cửa + bung cánh hoa, thiệp phía sau hiện dần
+      // 2. Hai cánh cửa xoay mở sang hai bên + ánh sáng vàng từ khe cửa
       const flash = document.createElement('div');
       flash.className = 'intro-flash';
       document.body.appendChild(flash);
+      doors.forEach((d) => d.classList.add('go'));
       box.remove();
       finish();
       document.body.classList.add('revealing');
-      confetti(innerWidth / 2, innerHeight * .45, true);
+      // 3. Cánh hoa bung ra sau một nhịp, khi cửa đã hé, để không dồn việc vào cùng một lúc
+      setTimeout(() => confetti(innerWidth / 2, innerHeight * .45, true), 250);
       setTimeout(() => {
         doors.forEach((d) => d.remove());
         flash.remove();
         document.body.classList.remove('revealing');
-      }, 1650);
+      }, 1500);
     }, 650);
   });
 })();
