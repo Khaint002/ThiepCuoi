@@ -4,11 +4,24 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Thiệp cưới – Trọng Tiếp &amp; Mai Chuyên</title>
-<meta name="description" content="Trân trọng kính mời bạn tới dự ngày vui của Trọng Tiếp &amp; Mai Chuyên – 04.12.2026">
-<!-- Ảnh hiện khi chia sẻ link qua Zalo/Facebook -->
-<meta property="og:title" content="Trọng Tiếp &amp; Mai Chuyên – Thiệp cưới">
-<meta property="og:description" content="Trân trọng kính mời bạn tới dự ngày vui của chúng mình">
-<meta property="og:image" content="images/album-4.jpg">
+<meta name="description" content="Trân trọng kính mời bạn tới chung vui cùng gia đình chúng mình · Lễ Vu Quy 03.12 · Lễ Thành Hôn 04.12.2026">
+<meta name="theme-color" content="#8E1F2B">
+<!-- Khung xem trước khi gửi link qua Zalo/Facebook/Messenger. Ảnh phải là link đầy đủ https://… -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Thiệp cưới Trọng Tiếp &amp; Mai Chuyên">
+<meta property="og:url" content="https://damcuoi-nine.vercel.app/">
+<meta property="og:title" content="💌 Thiệp mời cưới Trọng Tiếp &amp; Mai Chuyên">
+<meta property="og:description" content="Trân trọng kính mời bạn tới chung vui cùng gia đình chúng mình · Lễ Vu Quy 03.12 · Lễ Thành Hôn 04.12.2026">
+<meta property="og:image" content="https://damcuoi-nine.vercel.app/images/og-share.jpg">
+<meta property="og:image:secure_url" content="https://damcuoi-nine.vercel.app/images/og-share.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Trọng Tiếp &amp; Mai Chuyên – 04.12.2026">
+<meta property="og:locale" content="vi_VN">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://damcuoi-nine.vercel.app/images/og-share.jpg">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E💍%3C/text%3E%3C/svg%3E">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -98,6 +111,8 @@ h1,h2,p{margin:0}
 
 /* ---------- Hai phiên bản thiệp: nhà trai / nhà gái ---------- */
 body[data-v="trai"] [data-side="gai"],body[data-v="gai"] [data-side="trai"]{display:none!important}
+/* Bản "ca" (khách đi cả hai nhà): hiện cả hai thẻ sự kiện, chữ dùng câu riêng */
+body:not([data-v="ca"]) [data-side="ca"],body[data-v="ca"] .side-text:not([data-side="ca"]){display:none!important}
 .pair{display:flex;flex-direction:column;align-items:center;gap:4px}
 body[data-v="gai"] .pair{flex-direction:column-reverse}
 .pair-inline{display:inline-flex;gap:.3em}
@@ -201,8 +216,8 @@ legend{font-size:13px;font-weight:500;padding:0;margin-bottom:6px}
 </style>
 </head>
 <body>
-<!-- Phiên bản thiệp: ?nha=gai là thiệp nhà gái, còn lại là thiệp nhà trai -->
-<script>document.body.dataset.v = new URLSearchParams(location.search).get('nha') === 'gai' ? 'gai' : 'trai';</script>
+<!-- Phiên bản thiệp: ?nha=gai thiệp nhà gái · ?nha=ca đi cả hai nhà · còn lại thiệp nhà trai -->
+<script>(function () { const v = new URLSearchParams(location.search).get('nha'); document.body.dataset.v = v === 'gai' || v === 'ca' ? v : 'trai'; })();</script>
 
 <div class="petals" id="petals" aria-hidden="true"></div>
 
@@ -224,7 +239,7 @@ legend{font-size:13px;font-weight:500;padding:0;margin-bottom:6px}
         <p class="script amp rise d2">&amp;</p>
         <h1 class="script rise d2">Mai Chuyên</h1>
       </div>
-      <p class="serif date rise d3">04 · 12 · 2026</p>
+      <p class="serif date rise d3"><span class="side-text" data-side="gai">03 · 12 · 2026</span><span class="side-text" data-side="trai">04 · 12 · 2026</span><span class="side-text" data-side="ca">03 &amp; 04 · 12 · 2026</span></p>
       <div class="dots" id="coverDots">
         <button class="dot active" type="button" aria-label="Xem ảnh bìa 1"><span></span></button>
         <button class="dot" type="button" aria-label="Xem ảnh bìa 2"><span></span></button>
@@ -255,7 +270,7 @@ legend{font-size:13px;font-weight:500;padding:0;margin-bottom:6px}
         <p class="addr">Tổ 14, thôn Lúp, phường Hà Giang 1, tỉnh Tuyên Quang</p>
       </div>
     </div>
-    <p class="rv up" style="font-size:14px;color:var(--ink-2)"><span data-side="trai">Tới dự lễ thành hôn của con chúng tôi</span><span data-side="gai">Tới dự lễ vu quy của con chúng tôi</span></p>
+    <p class="rv up" style="font-size:14px;color:var(--ink-2)"><span class="side-text" data-side="trai">Tới dự lễ thành hôn của con chúng tôi</span><span class="side-text" data-side="gai">Tới dự lễ vu quy của con chúng tôi</span><span class="side-text" data-side="ca">Tới dự lễ vu quy và lễ thành hôn của con chúng tôi</span></p>
     <div class="rv zoom pair" style="gap:0">
       <p class="script couple-name">Trọng Tiếp</p>
       <p class="script" style="font-size:32px;line-height:1;margin:6px 0;color:var(--muted)">&amp;</p>
@@ -287,14 +302,14 @@ legend{font-size:13px;font-weight:500;padding:0;margin-bottom:6px}
     <div class="card rv up" data-side="gai">
       <p class="eyebrow">Nhà gái</p>
       <p class="script event-name">Lễ Vu Quy</p>
-      <p class="time">VÀO LÚC 10:00</p>
+      <p class="time">VÀO LÚC 17:30</p>
       <div class="when">
-        <span class="when-side">Thứ Sáu</span>
-        <span class="when-day">04</span>
+        <span class="when-side">Thứ Năm</span>
+        <span class="when-day">03</span>
         <span class="when-side">Tháng 12</span>
       </div>
       <p class="year">2026</p>
-      <p class="lunar">Tức ngày 26 tháng 10 năm Bính Ngọ</p>
+      <p class="lunar">Tức ngày 25 tháng 10 năm Bính Ngọ</p>
       <div class="orn" aria-hidden="true">✦</div>
       <p class="place">Tại tư gia nhà gái</p>
       <p class="addr">Tổ 14, thôn Lúp, phường Hà Giang 1, tỉnh Tuyên Quang<br>(sau Trường Chính trị)</p>
@@ -324,8 +339,8 @@ legend{font-size:13px;font-weight:500;padding:0;margin-bottom:6px}
       <p class="place">Tại tư gia nhà trai</p>
       <p class="addr">Thôn Làng Hản, xã Tân Trào, tỉnh Tuyên Quang<br>(thôn Khuôn Hẻ, xã Kim Quan cũ)</p>
       <div class="card-actions">
-        <!-- Nên thay bằng link ghim vị trí: Google Maps > Chia sẻ > Sao chép đường liên kết -->
-        <a class="pill" href="https://www.google.com/maps/search/?api=1&amp;query=Th%C3%B4n%20L%C3%A0ng%20H%E1%BA%A3n%2C%20x%C3%A3%20T%C3%A2n%20Tr%C3%A0o%2C%20t%E1%BB%89nh%20Tuy%C3%AAn%20Quang" target="_blank" rel="noopener">
+        <!-- Vị trí ghim nhà trai trên Google Maps -->
+        <a class="pill" href="https://maps.app.goo.gl/zmFKgAEnAuEgixiZ8" target="_blank" rel="noopener">
           <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Chỉ đường
         </a>
         <a class="pill solid add-cal" href="#">
@@ -377,7 +392,7 @@ legend{font-size:13px;font-weight:500;padding:0;margin-bottom:6px}
         <input name="name" type="text" placeholder="Nguyễn Văn A" required>
       </label>
       <label class="field rv up">Bạn là khách của
-        <select name="side"><option>Nhà trai</option><option>Nhà gái</option></select>
+        <select name="side"><option>Nhà trai</option><option>Nhà gái</option><option>Cả hai nhà</option></select>
       </label>
       <fieldset class="rv up">
         <legend>Bạn sẽ tham dự?</legend>
@@ -446,7 +461,8 @@ legend{font-size:13px;font-weight:500;padding:0;margin-bottom:6px}
    CẤU HÌNH
    ========================================================= */
 const CONFIG = {
-  // Hai phiên bản thiệp: link ?nha=trai (mặc định) và ?nha=gai. date dùng cho đếm ngược và "Thêm vào lịch".
+  // Ba phiên bản thiệp: ?nha=trai (mặc định), ?nha=gai, ?nha=ca (đi cả hai nhà).
+  // date: dùng cho đếm ngược và "Thêm vào lịch" của thẻ sự kiện tương ứng.
   sides: {
     trai: {
       date: '2026-12-04T17:00:00+07:00',
@@ -455,10 +471,14 @@ const CONFIG = {
       pageTitle: 'Thiệp cưới – Trọng Tiếp & Mai Chuyên'
     },
     gai: {
-      date: '2026-12-04T10:00:00+07:00',
+      date: '2026-12-03T17:30:00+07:00',
       eventTitle: 'Lễ Vu Quy Mai Chuyên & Trọng Tiếp',
       eventLocation: 'Tổ 14, thôn Lúp, phường Hà Giang 1, tỉnh Tuyên Quang',
       pageTitle: 'Thiệp cưới – Mai Chuyên & Trọng Tiếp'
+    },
+    ca: {
+      date: '2026-12-03T17:30:00+07:00', // đếm ngược tới lễ đầu tiên (Lễ Vu Quy)
+      pageTitle: 'Thiệp cưới – Trọng Tiếp & Mai Chuyên'
     }
   },
   eventDurationHours: 3,
@@ -474,27 +494,30 @@ const CONFIG = {
 
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const guestId = new URLSearchParams(location.search).get('g') || '';
-const SIDE_NAMES = { trai: 'Nhà trai', gai: 'Nhà gái' };
+const SIDE_NAMES = { trai: 'Nhà trai', gai: 'Nhà gái', ca: 'Cả hai nhà' };
 const currentSide = () => CONFIG.sides[document.body.dataset.v];
 
-/* ---------- Chuyển phiên bản thiệp nhà trai / nhà gái ---------- */
+/* ---------- Chuyển phiên bản thiệp nhà trai / nhà gái / cả hai ---------- */
 function setSide(side) {
   if (!CONFIG.sides[side]) return;
   document.body.dataset.v = side;
-  const v = CONFIG.sides[side];
-  document.title = v.pageTitle;
+  document.title = CONFIG.sides[side].pageTitle;
   document.getElementById('rsvpForm').elements.namedItem('side').value = SIDE_NAMES[side];
-  // Link "Thêm vào lịch" (Google Calendar)
+}
+setSide(document.body.dataset.v);
+
+/* ---------- "Thêm vào lịch" (Google Calendar) theo từng thẻ sự kiện ---------- */
+document.querySelectorAll('.card[data-side] .add-cal').forEach((a) => {
+  const v = CONFIG.sides[a.closest('.card').dataset.side];
   const start = new Date(v.date);
   const end = new Date(start.getTime() + CONFIG.eventDurationHours * 3600000);
   const fmt = (d) => d.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
-  const url = 'https://calendar.google.com/calendar/render?action=TEMPLATE'
+  a.href = 'https://calendar.google.com/calendar/render?action=TEMPLATE'
     + '&text=' + encodeURIComponent(v.eventTitle)
     + '&dates=' + fmt(start) + '/' + fmt(end)
     + '&location=' + encodeURIComponent(v.eventLocation);
-  document.querySelectorAll('.add-cal').forEach((a) => { a.href = url; a.target = '_blank'; a.rel = 'noopener'; });
-}
-setSide(document.body.dataset.v);
+  a.target = '_blank'; a.rel = 'noopener';
+});
 
 /* ---------- Lời mời riêng theo link ?g=<mã khách> ---------- */
 (function personalInvite() {
@@ -504,8 +527,8 @@ setSide(document.body.dataset.v);
     .then(({ ok, guest }) => {
       if (!ok) return;
       // Khách của nhà nào thì hiện thiệp nhà đó
-      if (guest.side === SIDE_NAMES.gai) setSide('gai');
-      else if (guest.side === SIDE_NAMES.trai) setSide('trai');
+      const side = Object.keys(SIDE_NAMES).find((k) => SIDE_NAMES[k] === guest.side);
+      if (side) setSide(side);
       document.getElementById('guestName').textContent = guest.name;
       const invite = document.getElementById('guestInvite');
       invite.textContent = guest.invite;

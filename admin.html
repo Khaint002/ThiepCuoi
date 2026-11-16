@@ -104,6 +104,7 @@ button,input,select,textarea{font:inherit;color:inherit}
         <div class="actions">
           <button class="btn sm" type="button" data-act="copyGeneric" data-side="trai">Sao chép link thiệp nhà trai</button>
           <button class="btn sm" type="button" data-act="copyGeneric" data-side="gai">Sao chép link thiệp nhà gái</button>
+          <button class="btn sm" type="button" data-act="copyGeneric" data-side="ca">Sao chép link đi cả hai nhà</button>
         </div>
       </div>
       <form class="card" id="guestForm">
@@ -114,7 +115,7 @@ button,input,select,textarea{font:inherit;color:inherit}
         </label>
         <div class="row">
           <label class="field">Khách của
-            <select id="gSide"><option>Nhà trai</option><option>Nhà gái</option></select>
+            <select id="gSide"><option>Nhà trai</option><option>Nhà gái</option><option>Cả hai nhà</option></select>
           </label>
         </div>
         <label class="field">Lời mời riêng <span class="hint">(không bắt buộc)</span>
@@ -135,6 +136,7 @@ button,input,select,textarea{font:inherit;color:inherit}
             <option value="">Tất cả</option>
             <option value="Nhà trai">Nhà trai</option>
             <option value="Nhà gái">Nhà gái</option>
+            <option value="Cả hai nhà">Cả hai nhà</option>
             <option value="unopened">Chưa mở thiệp</option>
             <option value="noreply">Chưa phản hồi</option>
           </select>
@@ -198,7 +200,7 @@ const linkFor = (side, id) => {
   const base = SITE_URL || new URL('index.html', location.href).href;
   return base + (base.includes('?') ? '&' : '?') + 'nha=' + side + (id ? '&g=' + id : '');
 };
-const sideOf = (g) => (g.side === 'Nhà gái' ? 'gai' : 'trai');
+const sideOf = (g) => ({ 'Nhà gái': 'gai', 'Cả hai nhà': 'ca' }[g.side] || 'trai');
 
 /* ---------- Đăng nhập ---------- */
 async function login(pw) {
