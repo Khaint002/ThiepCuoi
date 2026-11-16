@@ -275,11 +275,9 @@ legend{font-size:13px;font-weight:500;padding:0;margin-bottom:6px}
 html.locked,html.locked body{overflow:hidden}
 body.intro-on .rise{animation-play-state:paused}
 .intro{position:fixed;inset:0;z-index:90;display:flex;align-items:center;justify-content:center;padding:24px 16px;background:radial-gradient(120% 90% at 50% 40%,#8E1F2B 0%,#5A0F18 68%,#3A090F 100%);color:#F7EBDD;overflow:hidden;transition:opacity .9s ease,visibility .9s}
-.intro.opening{opacity:0;visibility:hidden}
 .hy{font-family:'Noto Serif SC','Songti SC','SimSun','Microsoft YaHei','PingFang SC',serif;font-weight:700;line-height:1;user-select:none;pointer-events:none}
 .intro .hy-dot{position:absolute;font-size:26px;color:rgba(247,235,221,.25)}
 .intro-card{position:relative;width:100%;max-width:400px;padding:44px 24px 40px;border:1px solid rgba(247,235,221,.28);border-radius:18px;background:linear-gradient(160deg,rgba(255,255,255,.07),rgba(255,255,255,.02));box-shadow:0 30px 60px rgba(0,0,0,.35);overflow:hidden;display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px;animation:introIn 1.1s cubic-bezier(.2,.7,.2,1) both;transition:transform .9s cubic-bezier(.65,0,.35,1)}
-.intro.opening .intro-card{transform:scale(1.08) translateY(-12px)}
 @keyframes introIn{from{opacity:0;transform:translateY(24px) scale(.97)}to{opacity:1;transform:none}}
 .intro-card .hy-big{position:absolute;font-size:250px;color:rgba(247,235,221,.09)}
 .hy-big.tl{top:-46px;left:-72px;transform:rotate(-18deg)}
@@ -291,11 +289,28 @@ body.intro-on .rise{animation-play-state:paused}
 .intro-orn::before,.intro-orn::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(233,201,160,.85),transparent)}
 .intro-date{position:relative;font-family:'Cormorant Garamond',serif;font-weight:600;font-size:22px;letter-spacing:.2em}
 .intro-invite{position:relative;margin-top:8px;font-size:13px;letter-spacing:.28em;text-transform:uppercase;color:#E9C9A0}
+.intro-msg{position:relative;max-width:330px;text-wrap:balance;margin-top:6px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:19px;line-height:1.5}
 .intro-guest{position:relative;margin-top:-6px;font-family:var(--name-font),cursive;font-size:36px;line-height:1.2}
 .intro-btn{position:relative;margin-top:14px;min-height:52px;padding:0 42px;border:0;border-radius:999px;background:#F7EBDD;color:var(--accent);font:inherit;font-size:16px;font-weight:600;letter-spacing:.05em;cursor:pointer;box-shadow:0 0 30px rgba(255,214,170,.45);animation:pulse 2.4s ease-in-out infinite}
 .intro-btn:hover{background:#fff}
 .intro-btn:focus-visible{outline:2px solid #F7EBDD;outline-offset:4px}
 @keyframes pulse{50%{box-shadow:0 0 0 10px rgba(247,235,221,.08),0 0 46px rgba(255,214,170,.65)}}
+/* Mở thiệp: đóng dấu sáng lên → màn tách đôi như 2 cánh cửa → ánh sáng + cánh hoa → thiệp hiện ra */
+.intro-seam{position:absolute;z-index:2;top:0;bottom:0;left:50%;width:2px;margin-left:-1px;background:linear-gradient(rgba(246,218,148,0),#F6DA94 20%,#FFF3D1 50%,#F6DA94 80%,rgba(246,218,148,0));box-shadow:0 0 18px 4px rgba(246,218,148,.65);transform:scaleY(0);transition:transform .55s cubic-bezier(.65,0,.35,1);pointer-events:none}
+.intro.sealing .intro-seam{transform:scaleY(1)}
+.intro.sealing .intro-seal{animation:sealPulse .6s ease;box-shadow:0 0 0 8px rgba(246,218,148,.28),0 0 64px rgba(255,214,170,.95)}
+@keyframes sealPulse{40%{transform:scale(1.2)}100%{transform:scale(1)}}
+.intro.sealing .intro-btn{animation:none;opacity:0;transform:scale(.9);transition:opacity .3s ease,transform .3s ease}
+.intro.door{pointer-events:none;transition:none}
+.door .intro-card,.door .intro-btn,.door .intro-seal{animation:none!important}
+.door-l{clip-path:inset(0 50% 0 0);transform-origin:0 50%;animation:doorL 1.5s cubic-bezier(.55,0,.25,1) forwards}
+.door-r{clip-path:inset(0 0 0 50%);transform-origin:100% 50%;animation:doorR 1.5s cubic-bezier(.55,0,.25,1) forwards}
+@keyframes doorL{0%{transform:perspective(1600px) rotateY(0)}75%{opacity:1}100%{transform:perspective(1600px) rotateY(88deg);opacity:0}}
+@keyframes doorR{0%{transform:perspective(1600px) rotateY(0)}75%{opacity:1}100%{transform:perspective(1600px) rotateY(-88deg);opacity:0}}
+.intro-flash{position:fixed;inset:0;z-index:89;pointer-events:none;background:radial-gradient(circle at 50% 45%,rgba(255,244,214,.95),rgba(246,218,148,.55) 30%,rgba(142,31,43,0) 70%);animation:introFlash 1.5s ease-out forwards}
+@keyframes introFlash{0%{opacity:0}20%{opacity:1}100%{opacity:0}}
+body.revealing .page{animation:pageIn 1.6s cubic-bezier(.2,.7,.2,1) both}
+@keyframes pageIn{from{transform:scale(1.08);filter:brightness(1.2) blur(2px)}to{transform:none;filter:none}}
 @media (prefers-reduced-motion:reduce){.intro-card,.intro-btn{animation:none}.intro{transition:none}}
 
 /* ---------- Nút nhạc nền ---------- */
@@ -321,6 +336,7 @@ body.intro-on .rise{animation-play-state:paused}
 
 <!-- Màn mở thiệp: hiện đầu tiên, khách bấm "Mở thiệp" để vào (đồng thời bật nhạc) -->
 <div class="intro" id="intro" role="dialog" aria-modal="true" aria-label="Thiệp mời cưới">
+  <span class="intro-seam" aria-hidden="true"></span>
   <span class="hy hy-dot" style="top:20px;left:20px" aria-hidden="true">囍</span>
   <span class="hy hy-dot" style="top:20px;right:20px" aria-hidden="true">囍</span>
   <span class="hy hy-dot" style="bottom:20px;left:20px" aria-hidden="true">囍</span>
@@ -332,8 +348,9 @@ body.intro-on .rise{animation-play-state:paused}
     <div class="pair intro-names"><span>Trọng Tiếp</span><span class="amp">&amp;</span><span>Mai Chuyên</span></div>
     <div class="intro-orn" aria-hidden="true">❦</div>
     <p class="intro-date"><span class="side-text" data-side="gai">03 · 12 · 2026</span><span class="side-text" data-side="trai">04 · 12 · 2026</span><span class="side-text" data-side="ca">03 &amp; 04 · 12 · 2026</span></p>
-    <p class="intro-invite" id="introInvite">Thân mời</p>
+    <p class="intro-invite" id="introInvite" hidden>Thân gửi</p>
     <p class="intro-guest" id="introGuest" hidden></p>
+    <p class="intro-msg">Chúng mình sắp về chung một nhà rồi!<br>Mời bạn ghé thăm tấm thiệp nhỏ<br>của chúng mình nhé.</p>
     <button class="intro-btn" id="introOpen" type="button">Mở thiệp</button>
   </div>
 </div>
@@ -378,14 +395,14 @@ body.intro-on .rise{animation-play-state:paused}
     <div class="grid2" style="width:100%;gap:16px">
       <div class="family trai rv up">
         <p class="eyebrow">Nhà trai</p>
-        <p>Ông Vi Ngọc Khuyến</p>
-        <p>Bà Đặng Thị Loan</p>
+        <p>Ông: Vi Ngọc Khuyến</p>
+        <p>Bà: Đặng Thị Loan</p>
         <p class="addr">Thôn Làng Hản, xã Tân Trào, tỉnh Tuyên Quang</p>
       </div>
       <div class="family gai rv up d1">
         <p class="eyebrow">Nhà gái</p>
-        <p>Ông Trần Văn Khiên</p>
-        <p>Bà Hoàng Thị Ngân</p>
+        <p>Ông: Trần Văn Khiên</p>
+        <p>Bà: Hoàng Thị Ngân</p>
         <p class="addr">Tổ 14, thôn Lúp, phường Hà Giang 1, tỉnh Tuyên Quang</p>
       </div>
     </div>
@@ -412,7 +429,7 @@ body.intro-on .rise{animation-play-state:paused}
         <p class="script">Mai Chuyên</p>
       </div>
     </div>
-    <p class="serif quote center rv up">[Một câu ngắn về hai bạn – nơi gặp nhau, câu nói yêu thích…]</p>
+    <p class="serif quote center rv up">Từ những buổi hẹn hò đầu tiên đến ngày trọng đại hôm nay, hành trình của chúng mình luôn trân trọng sự đồng hành của bạn. Hẹn gặp bạn lên đồ thật xịn, thật xinh đến chung vui cùng chúng mình nhé.</p>
   </section>
 
   <!-- 4. THỜI GIAN & ĐỊA ĐIỂM -->
@@ -751,7 +768,7 @@ document.querySelectorAll('.card[data-side] .add-cal').forEach((a) => {
       if (introGuest) {
         introGuest.textContent = guest.name;
         introGuest.hidden = false;
-        document.getElementById('introInvite').textContent = 'Trân trọng kính mời';
+        document.getElementById('introInvite').hidden = false;
       }
       // Điền sẵn form xác nhận
       const f = document.getElementById('rsvpForm').elements;
@@ -762,7 +779,8 @@ document.querySelectorAll('.card[data-side] .add-cal').forEach((a) => {
 })();
 
 /* ---------- Pháo giấy + ruy băng khi mở hộp quà ---------- */
-function confetti(ox, oy) {
+// petal = true: bung cánh hoa hồng (dùng khi mở thiệp), mặc định: giấy màu + ruy băng
+function confetti(ox, oy, petal) {
   if (reduceMotion) return;
   const cv = document.createElement('canvas');
   cv.className = 'confetti';
@@ -770,7 +788,9 @@ function confetti(ox, oy) {
   const ctx = cv.getContext('2d');
   const W = innerWidth, H = innerHeight, dpr = Math.min(devicePixelRatio || 1, 2);
   cv.width = W * dpr; cv.height = H * dpr; ctx.scale(dpr, dpr);
-  const colors = ['#8E1F2B', '#D9536A', '#F4C2C9', '#F3D48A', '#C9973F', '#FFFFFF', '#E87F8F'];
+  const colors = petal
+    ? ['#F4C2C9', '#EBA9B3', '#F8D7DC', '#FFFFFF', '#F3D48A']
+    : ['#8E1F2B', '#D9536A', '#F4C2C9', '#F3D48A', '#C9973F', '#FFFFFF', '#E87F8F'];
   const pick = () => colors[Math.random() * colors.length | 0];
   const pieces = [], ribbons = [];
   // Bắn từ hộp quà lên, cộng 2 ống pháo ở hai góc dưới màn hình bắn chéo vào giữa
@@ -780,15 +800,19 @@ function confetti(ox, oy) {
       pieces.push({ x, y, vx: Math.cos(a) * v, vy: Math.sin(a) * v, w: 6 + Math.random() * 6, h: 10 + Math.random() * 8,
         rot: Math.random() * 6.3, vr: (Math.random() - .5) * .3, flip: Math.random() * 6.3, color: pick() });
     }
-    for (let i = 0; i < n / 8; i++) {
+    for (let i = 0; i < (petal ? 0 : n / 8); i++) {
       const a = angle + (Math.random() - .5) * spread * .8, v = speed * (.6 + Math.random() * .5);
       ribbons.push({ x, y, vx: Math.cos(a) * v, vy: Math.sin(a) * v, phase: Math.random() * 6.3, color: pick(), trail: [] });
     }
   };
   const up = -Math.PI / 2;
-  shoot(ox, oy, up, 1.6, 110, 15);
-  shoot(0, H, -Math.PI / 3, .6, 60, 20);
-  shoot(W, H, -Math.PI * 2 / 3, .6, 60, 20);
+  if (petal) {
+    shoot(ox, oy, up, 3.4, 150, 13);
+  } else {
+    shoot(ox, oy, up, 1.6, 110, 15);
+    shoot(0, H, -Math.PI / 3, .6, 60, 20);
+    shoot(W, H, -Math.PI * 2 / 3, .6, 60, 20);
+  }
   const start = performance.now();
   (function frame(t) {
     ctx.clearRect(0, 0, W, H);
@@ -800,7 +824,8 @@ function confetti(ox, oy) {
       ctx.save();
       ctx.translate(p.x, p.y); ctx.rotate(p.rot); ctx.scale(1, Math.cos(p.flip));
       ctx.fillStyle = p.color;
-      ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+      if (petal) { ctx.beginPath(); ctx.ellipse(0, 0, p.w * .6, p.h * .55, 0, 0, Math.PI * 2); ctx.fill(); }
+      else ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
       ctx.restore();
     });
     ctx.lineCap = 'round'; ctx.lineJoin = 'round';
@@ -854,12 +879,40 @@ function confetti(ox, oy) {
   const box = document.getElementById('intro');
   const btn = document.getElementById('introOpen');
   // Bấm nút cũng là lần chạm đầu tiên nên nhạc nền tự bật (xem phần Nhạc nền)
-  btn.addEventListener('click', () => {
+  const finish = () => {
     document.body.classList.remove('intro-on');
     document.documentElement.classList.remove('locked');
-    if (reduceMotion) { box.remove(); return; }
-    box.classList.add('opening');
-    setTimeout(() => box.remove(), 900);
+  };
+  btn.addEventListener('click', () => {
+    if (box.classList.contains('sealing')) return;
+    if (reduceMotion) { finish(); box.remove(); return; }
+    // 1. Con dấu 囍 sáng lên, đường sáng chạy dọc giữa màn hình
+    box.classList.add('sealing');
+    setTimeout(() => {
+      // 2. Tách màn thành 2 cánh cửa xoay mở sang hai bên
+      const doors = ['door-l', 'door-r'].map((cls) => {
+        const door = box.cloneNode(true);
+        door.removeAttribute('id');
+        door.querySelectorAll('[id]').forEach((el) => el.removeAttribute('id'));
+        door.classList.add('door', cls);
+        door.setAttribute('aria-hidden', 'true');
+        document.body.appendChild(door);
+        return door;
+      });
+      // 3. Ánh sáng vàng từ khe cửa + bung cánh hoa, thiệp phía sau hiện dần
+      const flash = document.createElement('div');
+      flash.className = 'intro-flash';
+      document.body.appendChild(flash);
+      box.remove();
+      finish();
+      document.body.classList.add('revealing');
+      confetti(innerWidth / 2, innerHeight * .45, true);
+      setTimeout(() => {
+        doors.forEach((d) => d.remove());
+        flash.remove();
+        document.body.classList.remove('revealing');
+      }, 1650);
+    }, 650);
   });
 })();
 
