@@ -104,13 +104,25 @@ h1,h2,p{margin:0}
 .family .addr{font-size:13px;color:var(--muted)}
 .couple-name{font-size:50px;line-height:1.2;color:var(--accent)}
 .role{font-size:12px;color:var(--muted)}
-.portrait{position:relative;height:300px;border-radius:999px 999px 14px 14px;overflow:hidden;background:var(--ph);box-shadow:0 10px 24px rgba(60,10,16,.15)}
+.portrait{position:relative;height:250px;border-radius:999px 999px 14px 14px;overflow:hidden;background:var(--ph);box-shadow:0 10px 24px rgba(60,10,16,.15)}
 .portrait::after{content:'';position:absolute;inset:6px;border:1px solid rgba(255,255,255,.75);border-radius:999px 999px 10px 10px;pointer-events:none}
 .portrait img{width:100%;height:100%;object-fit:cover;transform:scale(1.3)}
-.portrait-col{display:flex;flex-direction:column;align-items:center;gap:2px}
-.portrait-col .eyebrow{margin-top:12px}
-.portrait-col .script{font-size:30px;line-height:1.2;color:var(--accent)}
-body[data-v="gai"] .portrait-col.gai{order:-1}
+/* Tiểu sử: mỗi người 1 hàng, ảnh và chữ so le (chú rể ảnh trái, cô dâu ảnh phải) */
+.profiles{display:flex;flex-direction:column;gap:36px}
+.profile{display:grid;grid-template-columns:150px minmax(0,1fr);gap:18px;align-items:center}
+.profile .bio-text{display:flex;flex-direction:column;gap:4px;text-align:left}
+.profile .bio-name{font-size:32px;line-height:1.15;color:var(--accent)}
+.profile .bio{margin-top:6px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:17px;line-height:1.55;color:var(--ink-2)}
+.profile.flip{grid-template-columns:minmax(0,1fr) 150px}
+.profile.flip .portrait{order:2}
+.profile.flip .bio-text{text-align:right}
+/* Thiệp nhà gái: cô dâu lên trước, ảnh bên trái */
+body[data-v="gai"] .profile.gai{order:-1;grid-template-columns:150px minmax(0,1fr)}
+body[data-v="gai"] .profile.gai .portrait{order:0}
+body[data-v="gai"] .profile.gai .bio-text{text-align:left}
+body[data-v="gai"] .profile.trai{grid-template-columns:minmax(0,1fr) 150px}
+body[data-v="gai"] .profile.trai .portrait{order:2}
+body[data-v="gai"] .profile.trai .bio-text{text-align:right}
 .quote{font-style:italic;font-size:20px;line-height:1.5;color:var(--ink-2)}
 .guest{display:flex;flex-direction:column;gap:10px;margin-top:-12px}
 .guest-name{font-size:40px;line-height:1.2;color:var(--accent)}
@@ -259,6 +271,7 @@ legend{font-size:13px;font-weight:500;padding:0;margin-bottom:6px}
 .thanks{background:var(--ink);color:var(--bg);padding:72px 28px;align-items:center;text-align:center;gap:14px}
 .thanks .big{font-size:48px;line-height:1.2}
 .thanks .sub{font-size:14px;color:#D9CEC2}
+.thanks .thanks-quote{max-width:350px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:19px;line-height:1.6}
 .thanks .names{margin-top:12px;font-size:34px;line-height:1.3}
 
 /* ---------- Chữ 囍 chìm trên nền các mục ---------- */
@@ -416,20 +429,25 @@ body.revealing .page{animation:pageIn 1.6s cubic-bezier(.2,.7,.2,1) both}
 
   <!-- 3. ẢNH ĐÔI -->
   <section class="section hy-bg hy-br" style="padding-top:0">
-    <div class="grid2" style="gap:12px">
+    <div class="profiles">
       <!-- Chỉnh khung ảnh: scale = độ phóng to, transform-origin = tâm phóng (ngang dọc, % từ góc trên trái) -->
-      <div class="portrait-col trai rv up">
+      <div class="profile trai rv left">
         <div class="portrait"><img src="images/anhChuRe.jpg" alt="Chú rể Trọng Tiếp" loading="lazy" style="transform:scale(1.2);transform-origin:45% 15%"></div>
-        <p class="eyebrow">Chú rể</p>
-        <p class="script">Trọng Tiếp</p>
+        <div class="bio-text">
+          <p class="eyebrow">Chú rể</p>
+          <p class="script bio-name">Trọng Tiếp</p>
+          <p class="bio">Chàng trai trầm tính, ấm áp và luôn là chỗ dựa vững chắc cho gia đình. Không nói nhiều lời hoa mỹ, anh chọn cách quan tâm bằng hành động và luôn kiên nhẫn trước mọi “nắng mưa” của cô dâu.</p>
+        </div>
       </div>
-      <div class="portrait-col gai rv up d1">
+      <div class="profile gai flip rv right">
         <div class="portrait"><img src="images/anhCodau.jpg" alt="Cô dâu Mai Chuyên" loading="lazy" style="transform:scale(1.55);transform-origin:45% 20%"></div>
-        <p class="eyebrow">Cô dâu</p>
-        <p class="script">Mai Chuyên</p>
+        <div class="bio-text">
+          <p class="eyebrow">Cô dâu</p>
+          <p class="script bio-name">Mai Chuyên</p>
+          <p class="bio">Cô gái dịu dàng, yêu cái đẹp và có niềm đam mê bất tận với đồ ăn ngon. Dù thỉnh thoảng hơi “nắng mưa thất thường”, nhưng luôn hết lòng vì gia đình và người thương.</p>
+        </div>
       </div>
     </div>
-    <p class="serif quote center rv up">Từ những buổi hẹn hò đầu tiên đến ngày trọng đại hôm nay, hành trình của chúng mình luôn trân trọng sự đồng hành của bạn. Hẹn gặp bạn lên đồ thật xịn, thật xinh đến chung vui cùng chúng mình nhé.</p>
   </section>
 
   <!-- 4. THỜI GIAN & ĐỊA ĐIỂM -->
@@ -610,7 +628,7 @@ body.revealing .page{animation:pageIn 1.6s cubic-bezier(.2,.7,.2,1) both}
   <!-- 9. LỜI CẢM ƠN -->
   <section class="section thanks hy-bg hy-c">
     <p class="script big rv zoom">Cảm ơn bạn!</p>
-    <p class="sub rv up d1">Rất mong được đón tiếp bạn trong ngày vui của chúng mình.</p>
+    <p class="sub thanks-quote rv up d1">Từ những buổi hẹn hò đầu tiên đến ngày trọng đại hôm nay, hành trình của chúng mình luôn trân trọng sự đồng hành của bạn. Hẹn gặp bạn lên đồ thật xịn, thật xinh đến chung vui cùng chúng mình nhé.</p>
     <p class="script names rv up d2"><span class="pair-inline"><span>Trọng Tiếp</span><span>&amp;</span><span>Mai Chuyên</span></span></p>
   </section>
 
