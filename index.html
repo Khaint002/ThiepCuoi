@@ -73,8 +73,8 @@ h1,h2,p{margin:0}
 
 /* ---------- Cover slideshow ---------- */
 .cover{position:relative;height:100vh;height:100svh;min-height:600px;max-height:860px;overflow:hidden;background:var(--ink)}
-.cover-track{display:flex;width:300%;height:100%;transition:transform .9s cubic-bezier(.65,0,.35,1)}
-.cover-slide{position:relative;width:33.3333%;height:100%;overflow:hidden;flex-shrink:0}
+.cover-track{display:flex;width:400%;height:100%;transition:transform .9s cubic-bezier(.65,0,.35,1)}
+.cover-slide{position:relative;width:25%;height:100%;overflow:hidden;flex-shrink:0}
 .cover-slide .ph{position:absolute;inset:0;border:0;align-items:flex-start;padding-top:22vh;letter-spacing:.08em;text-transform:uppercase;animation:kb 14s ease-in-out infinite alternate}
 .cover-slide .ph img{position:absolute;inset:0;object-position:center 25%}
 @keyframes kb{from{transform:scale(1)}to{transform:scale(1.1)}}
@@ -387,7 +387,9 @@ body.revealing .cover{animation:pageIn 1.5s cubic-bezier(.2,.7,.2,1) both;will-c
     <div class="cover-track" id="coverTrack">
       <!-- Ảnh bìa: đổi src để chọn ảnh khác (nên dùng ảnh dọc, người ở nửa trên ảnh vì chữ nằm ở nửa dưới) -->
       <div class="cover-slide"><div class="ph"><img src="images/album-2.jpg" alt="" fetchpriority="high"></div></div>
-      <div class="cover-slide"><div class="ph"><img src="images/album-4.jpg" alt=""></div></div>
+      <div class="cover-slide"><div class="ph"><img src="images/2H7A3320.jpg" alt=""></div></div>
+      <!-- Ảnh ngang: phóng 1.6 lần, tựa cạnh dưới để mặt cô dâu chú rể nằm trên phần chữ -->
+      <div class="cover-slide"><div class="ph"><img src="images/2H7A1349.jpg" alt="" style="object-position:76% 50%;transform:scale(1.6);transform-origin:50% 100%"></div></div>
       <div class="cover-slide"><div class="ph"><img src="images/album-1.jpg" alt=""></div></div>
     </div>
     <div class="cover-shade"></div>
@@ -403,6 +405,7 @@ body.revealing .cover{animation:pageIn 1.5s cubic-bezier(.2,.7,.2,1) both;will-c
         <button class="dot active" type="button" aria-label="Xem ảnh bìa 1"><span></span></button>
         <button class="dot" type="button" aria-label="Xem ảnh bìa 2"><span></span></button>
         <button class="dot" type="button" aria-label="Xem ảnh bìa 3"><span></span></button>
+        <button class="dot" type="button" aria-label="Xem ảnh bìa 4"><span></span></button>
       </div>
     </div>
   </section>
@@ -541,16 +544,19 @@ body.revealing .cover{animation:pageIn 1.5s cubic-bezier(.2,.7,.2,1) both;will-c
         <!-- Mỗi ảnh: <div class="album-item"><img src="images/album-1.jpg" alt=""></div> (ô đầu tiên thêm class "active") -->
         <div class="album-item active"><img src="images/album-1.jpg" alt="Ảnh cưới 1"></div>
         <div class="album-item"><img src="images/album-2.jpg" alt="Ảnh cưới 2"></div>
-        <div class="album-item"><img src="images/album-3.jpg" alt="Ảnh cưới 3" loading="lazy"></div>
-        <div class="album-item"><img src="images/album-4.jpg" alt="Ảnh cưới 4" loading="lazy"></div>
-        <div class="album-item"><img src="images/album-5.jpg" alt="Ảnh cưới 5" loading="lazy"></div>
-        <div class="album-item"><img src="images/album-6.jpg" alt="Ảnh cưới 6" loading="lazy"></div>
-        <div class="album-item"><img src="images/album-7.jpg" alt="Ảnh cưới 7" loading="lazy"></div>
+        <div class="album-item"><img src="images/album-5.jpg" alt="Ảnh cưới 3" loading="lazy"></div>
+        <div class="album-item"><img src="images/album-6.jpg" alt="Ảnh cưới 4" loading="lazy"></div>
+        <div class="album-item"><img src="images/album-7.jpg" alt="Ảnh cưới 5" loading="lazy"></div>
+        <div class="album-item"><img src="images/2H7A1401.jpg" alt="Ảnh cưới 6" loading="lazy"></div>
+        <div class="album-item"><img src="images/2H7A1634.jpg" alt="Ảnh cưới 7" loading="lazy"></div>
+        <div class="album-item"><img src="images/2H7A3348.jpg" alt="Ảnh cưới 8" loading="lazy"></div>
+        <div class="album-item"><img src="images/2H7A3635.jpg" alt="Ảnh cưới 9" loading="lazy"></div>
+        <div class="album-item"><img src="images/2H7A4067.jpg" alt="Ảnh cưới 10" loading="lazy"></div>
       </div>
     </div>
     <div class="album-nav">
       <button class="round-btn" type="button" id="albumPrev" aria-label="Ảnh trước"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 6l-6 6 6 6"/></svg></button>
-      <p class="serif album-count" id="albumCount">1 / 7</p>
+      <p class="serif album-count" id="albumCount">1 / 10</p>
       <button class="round-btn" type="button" id="albumNext" aria-label="Ảnh tiếp theo"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 6l6 6-6 6"/></svg></button>
     </div>
   </section>
