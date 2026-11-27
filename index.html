@@ -387,7 +387,7 @@ body.revealing .cover{animation:pageIn 1.5s cubic-bezier(.2,.7,.2,1) both;will-c
     <div class="cover-track" id="coverTrack">
       <!-- Ảnh bìa: đổi src để chọn ảnh khác (nên dùng ảnh dọc, người ở nửa trên ảnh vì chữ nằm ở nửa dưới) -->
       <div class="cover-slide"><div class="ph"><img src="images/2H7A2301.jpg" alt="" fetchpriority="high"></div></div>
-      <div class="cover-slide"><div class="ph"><img src="images/2H7A3694.jpg" alt=""></div></div>
+      <div class="cover-slide"><div class="ph"><img src="images/2H7A3320.jpg" alt=""></div></div>
       <div class="cover-slide"><div class="ph"><img src="images/2H7A1602.jpg" alt=""></div></div>
       <div class="cover-slide"><div class="ph"><img src="images/2H7A2953.jpg" alt=""></div></div>
     </div>
@@ -548,21 +548,17 @@ body.revealing .cover{animation:pageIn 1.5s cubic-bezier(.2,.7,.2,1) both;will-c
         <div class="album-item"><img src="images/2H7A2787.jpg" alt="Ảnh cưới 5" loading="lazy"></div>
         <div class="album-item"><img src="images/2H7A4065.jpg" alt="Ảnh cưới 6" loading="lazy"></div>
         <div class="album-item"><img src="images/2H7A2191.jpg" alt="Ảnh cưới 7" loading="lazy"></div>
-        <div class="album-item"><img src="images/2H7A1708.jpg" alt="Ảnh cưới 8" loading="lazy"></div>
-        <div class="album-item"><img src="images/2H7A2554.jpg" alt="Ảnh cưới 9" loading="lazy"></div>
-        <div class="album-item"><img src="images/2H7A3912.jpg" alt="Ảnh cưới 10" loading="lazy"></div>
-        <div class="album-item"><img src="images/2H7A1878.jpg" alt="Ảnh cưới 11" loading="lazy"></div>
-        <div class="album-item"><img src="images/2H7A2351.jpg" alt="Ảnh cưới 12" loading="lazy"></div>
-        <div class="album-item"><img src="images/2H7A4018.jpg" alt="Ảnh cưới 13" loading="lazy"></div>
-        <div class="album-item"><img src="images/2H7A2609.jpg" alt="Ảnh cưới 14" loading="lazy"></div>
-        <div class="album-item"><img src="images/2H7A2121.jpg" alt="Ảnh cưới 15" loading="lazy"></div>
-        <div class="album-item"><img src="images/2H7A4084.jpg" alt="Ảnh cưới 16" loading="lazy"></div>
-        <div class="album-item"><img src="images/2H7A2755.jpg" alt="Ảnh cưới 17" loading="lazy"></div>
+        <div class="album-item"><img src="images/2H7A2554.jpg" alt="Ảnh cưới 8" loading="lazy"></div>
+        <div class="album-item"><img src="images/2H7A3912.jpg" alt="Ảnh cưới 9" loading="lazy"></div>
+        <div class="album-item"><img src="images/2H7A2351.jpg" alt="Ảnh cưới 10" loading="lazy"></div>
+        <div class="album-item"><img src="images/2H7A4018.jpg" alt="Ảnh cưới 11" loading="lazy"></div>
+        <div class="album-item"><img src="images/2H7A2609.jpg" alt="Ảnh cưới 12" loading="lazy"></div>
+        <div class="album-item"><img src="images/2H7A4084.jpg" alt="Ảnh cưới 13" loading="lazy"></div>
       </div>
     </div>
     <div class="album-nav">
       <button class="round-btn" type="button" id="albumPrev" aria-label="Ảnh trước"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 6l-6 6 6 6"/></svg></button>
-      <p class="serif album-count" id="albumCount">1 / 17</p>
+      <p class="serif album-count" id="albumCount">1 / 13</p>
       <button class="round-btn" type="button" id="albumNext" aria-label="Ảnh tiếp theo"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 6l6 6-6 6"/></svg></button>
     </div>
   </section>
@@ -1007,10 +1003,17 @@ function confetti(ox, oy, petal) {
     items.forEach((it, k) => it.classList.toggle('active', k === idx));
     count.textContent = `${idx + 1} / ${items.length}`;
   };
+  // Chỉ tự trượt khi album đang nằm trong màn hình: lần đầu kéo tới sẽ bắt đầu từ ảnh 1,
+  // kéo đi chỗ khác thì dừng, quay lại thì chạy tiếp
+  let visible = false;
   const start = () => {
     clearInterval(timer);
-    if (!grid) timer = setInterval(() => go(idx + 1), CONFIG.albumInterval);
+    if (!grid && visible) timer = setInterval(() => go(idx + 1), CONFIG.albumInterval);
   };
+  new IntersectionObserver(([e]) => {
+    visible = e.isIntersecting;
+    start();
+  }, { threshold: 0.5 }).observe(view);
   const swipe = (el, onLeft, onRight) => {
     el.addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; }, { passive: true });
     el.addEventListener('touchend', (e) => {
